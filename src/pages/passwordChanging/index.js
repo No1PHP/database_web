@@ -91,12 +91,12 @@ class passwordChanging extends PureComponent {
                         onFinishFailed={onFinishFailed}
                     >
                         <Form.Item
-                            label="用户名"
+                            label="username"
                             name="username"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请输入用户名!',
+                                    message: 'Please type username!',
                                 },
                             ]}>
                             <Input innerRef={(input) => {
@@ -104,12 +104,12 @@ class passwordChanging extends PureComponent {
                             }}/>
                         </Form.Item>
                         <Form.Item
-                            label="密码"
+                            label="password"
                             name="password"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请输入原密码!',
+                                    message: 'please type the old password!',
                                 },
                             ]}>
                             <Input type='password' innerRef={(input) => {
@@ -117,12 +117,12 @@ class passwordChanging extends PureComponent {
                             }}/>
                         </Form.Item>
                         <Form.Item
-                            label="新密码"
+                            label="newPassword"
                             name="newPassword"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请输入新密码!',
+                                    message: 'Please type the new password!',
                                 },
                             ]}>
                             <Input type='password' innerRef={(input) => {
@@ -130,12 +130,12 @@ class passwordChanging extends PureComponent {
                             }}/>
                         </Form.Item>
                         <Form.Item
-                            label="再次输入新密码"
+                            label="newPasswordAgain"
                             name="newPasswordAgain"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请再次输入新密码!',
+                                    message: 'Please type the new password again!',
                                 },
                             ]}>
                             <Input type='password' innerRef={(input) => {
@@ -148,7 +148,7 @@ class passwordChanging extends PureComponent {
                                     htmlType="submit"
                                     onClick={() => this.props.passwordChanging(this.account,this.password,this.newPassword,this.newPasswordAgain)}
                             >
-                                修改密码
+                                Change password
                             </Button>
 
                         </Form.Item>

@@ -5,7 +5,7 @@ import Header from './common/header';
 import Home from './pages/home';
 import Material from './pages/Material/loadable.js';
 import Login from './pages/login';
-import Write from './pages/write';
+import Write from './pages/Staffinfo';
 import store from './store';
 import passwordChanging from './pages/passwordChanging';
 
