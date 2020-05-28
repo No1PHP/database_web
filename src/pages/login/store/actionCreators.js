@@ -19,12 +19,13 @@ export const login = (account, password) => {
 			account: account,
 			password: password
 		};
-		axios.post('/api/login.json?account=' ,data).then((res) => {
-			const result = res.data.data;
-			if (result) {
+		axios.post('http://localhost:8080/account/loginPage?accountString="{account:\''+account+'\',password:\''+password+'\'}"').then((res) => {
+			const result = res.data.status;
+			if (result === "login success") {
+				alert(result)
 				dispatch(changeLogin(account))
 			}else {
-				alert('登陆失败')
+				alert("登陆失败")
 			}
 		})
 	}
