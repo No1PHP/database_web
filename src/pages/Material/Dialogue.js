@@ -34,8 +34,8 @@ class Dialogue extends React.Component {
     };
 
     handleOk = () => {
-        const dataList = this.state.data;
-        this.props.handleDataFromDialogue(dataList);
+        const data = this.state.data;
+        this.props.handleDataFromDialogue(data);
     };
 
     handleCancel = () => {
@@ -51,9 +51,10 @@ class Dialogue extends React.Component {
                 </a>
                 <Modal
                     visible={visible}
-                    title="Enter the update record you want to instill"
+                    title="Enter the Material record you want to instill"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    size = {"small"}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
@@ -63,6 +64,7 @@ class Dialogue extends React.Component {
                         </Button>,
                     ]}
                 >
+                    <Form>
                     <Form.Item
                         name="name"
                         >
@@ -154,6 +156,7 @@ class Dialogue extends React.Component {
                             })
                         }}/>
                     </Form.Item>
+                    </Form>
                 </Modal>
             </div>
         );

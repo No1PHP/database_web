@@ -8,20 +8,31 @@ import { getIn } from 'immutable';
 import axios from "axios";
 import OperationDrawer from "./drawer";
 import Dialogue from "./Dialogue";
+import PullDrawer from "./PullDrawer";
+import OrderDrawer from "./store/OrderDrawer";
+import DayShiftDrawer from "./DayShiftDrawer";
+import StallChangeDrawer from "./StallChangeDrawer";
 
 
-class Material extends Component {
+class OperationRecord extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			list: [
 				{
-					operationID:'',
-					staffID:'',
-					operationType:'',
-					note:'',
-					operationTime:'',
+					operationID:'1',
+					staffID:'15',
+					operationType:'pull',
+					note:'egg in store',
+					operationTime:'2019-6-1',
+				},
+				{
+					operationID:'2',
+					staffID:'17',
+					operationType:'order',
+					note:'egg to be consumed',
+					operationTime:'2020-7-1',
 				},
 				{
 					operationID:'',
@@ -44,33 +55,12 @@ class Material extends Component {
 					note:'',
 					operationTime:'',
 				},
-				{
-					operationID:'',
-					staffID:'',
-					operationType:'',
-					note:'',
-					operationTime:'',
-				},
-				{
-					operationID:'',
-					staffID:'',
-					operationType:'',
-					note:'',
-					operationTime:'',
-				},
-				{
-					operationID:'',
-					staffID:'',
-					operationType:'',
-					note:'',
-					operationTime:'',
-				},
+
 			],
 			pageNo:'1',
 			size:'10',
 		};
-		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
+
 	}
 
 
@@ -86,7 +76,7 @@ class Material extends Component {
 	}
 
 
-	handleDataFromDialogue(data){
+	handleDataFromDialogue(data){   //from OperationDrawer for Add
 		const dataList = {
 			OperationData : data,
 			operation : 'Update'
@@ -96,54 +86,101 @@ class Material extends Component {
 		});
 	}
 
+	handleDataFromPullDrawer(data){
+		axios.post('http://localhost:8080/operate/do',data).then((res) => {
+			const result = res.data.status;
+			alert((result===200)?'succeed':'pull operation failed');
+		}).catch((e) => {
+			console.log(e)
+		})
 
-	getOperation = (pageNo,size,account) => {
-		return () => {
-			axios.get('localhost:8000/Operation'+'pageNo='+pageNo+'&'+'size='+size+'&'+'account='+account).then((res) => {
+	}
+
+	handleDataFromOrderDrawer(data){
+		axios.post('http://localhost:8080/operate/do',data).then((res) => {
+			const result = res.data.status;
+			alert((result===200)?'succeed':'order added failed');
+		}).catch((e) => {
+			console.log(e)
+		})
+
+	}
+
+
+	handleDataFromDayShiftDrawer(data){
+		axios.post('http://localhost:8080/operate/do',data).then((res) => {
+			const result = res.data.status;
+			alert((result===200)?'succeed':'Day Shift modify failed');
+		}).catch((e) => {
+			console.log(e)
+		})
+
+	}
+
+	handleDataFromStallChangeDrawer(data){
+		axios.post('http://localhost:8080/operate/do',data).then((res) => {
+			const result = res.data.status;
+			alert((result===200)?'succeed':'Stall Change failed');
+		}).catch((e) => {
+			console.log(e)
+		})
+
+	}
+
+	getOperation = (pageNo,size) => {
+		return (
+			axios.get('localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Operation').then((res) => {
 				const result = res.data.data;
 				this.setState(
 					{list : result}
 				)
 			}).catch((e) => {
 				console.log(e)
-			})
-		}
+			}))
+
 	};
 
 
-	//删除 传入食材名字
+	//删除
 	deleteData = (name) => {
 		return (
-			axios.get('localhost:8000/Operation/delete/'+'name='+name).then((res) => {
+			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=OperationRecord').then((res) => {
 					const result = res.status;
-					console.log((result===400)?'item successfully changed':'change failed')
+					alert((result===200)?'item successfully changed':'change failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 	}
 
 
 
 
-	updateData = (dataList) => {//传本项的datalist
+	updateData = (dataList) => {
+		//TODO:修改的url请求地址
 		return (
-			axios.post('localhost:8000/Operation/update',dataList).then((res) => {
+			axios.post('http://localhost:8080/operate/update',dataList).then((res) => {
 					const result = res.status;
-					console.log((result===400)?'item successfully changed':'change failed')
+					console.log((result===200)?'item successfully changed':'change failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 
 	}
 
-
+//TODO
 	addNewOperation = (dataList) => {
 		return (
-			axios.post('localhost:8000/Operation/add',dataList).then((res) => {
+			axios.post('localhost:8080/operate/do',dataList).then((res) => {
 					const result = res.status;
-					console.log((result===400)?'Item successfully added':'Added failed')
+					console.log((result===200)?'Item successfully added':'Added failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 	}
 
@@ -151,44 +188,30 @@ class Material extends Component {
 
 	renderColumn = [
 		{
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
+			title: 'OperationID',
+			dataIndex: 'operationID',
+			key: 'operationID',
+			sorter: (a, b) => a.operationID - b.operationID
 		},
 		{
-			title: 'Type',
-			dataIndex: 'type',
-			key: 'type',
+			title: 'StaffID',
+			dataIndex: 'staffID',
+			key: 'staffID',
 		},
 		{
-			title: 'UnitPrice',
-			dataIndex: 'unitPrice',
-			key: 'unitPrice',
+			title: 'OperationType',
+			dataIndex: 'operationType',
+			key: 'operationType',
 		},
 		{
-			title : 'AvailableAmount',
-			dataIndex : 'availableAmount',
-			key: 'availableAmount',
+			title : 'Note',
+			dataIndex : 'note',
+			key: 'note',
 		},
 		{
-			title : 'AvailablePeriod',
-			dataIndex : 'availablePeriod',
-			key : 'availablePeriod',
-		},
-		{
-			title: 'MaterialOrders',
-			dataIndex: 'materialOrders',
-			key : 'materialOrders',
-		},
-		{
-			title: 'Recipes',
-			dataIndex: 'recipes',
-			key : 'recipes',
-		},
-		{
-			title: 'MaterialUsages',
-			dataIndex: 'materialUsages',
-			key : 'materialUsages',
+			title : 'OperationTime',
+			dataIndex : 'operationTime',
+			key : 'operationTime',
 		},
 		{
 			title: 'Action',
@@ -197,7 +220,7 @@ class Material extends Component {
 				<Space size="middle">
 					{/*update dialogue*/}
 					<Dialogue />
-					<a className="delete-data" onClick={this.deleteData(record.name)}>Delete</a>
+					<a className="delete-data" onClick={(e)=>this.deleteData(record.operationID)}>Delete</a>
 				</Space>
 			),
 		},
@@ -209,11 +232,20 @@ class Material extends Component {
 
 		return (
 			<DetailWrapper>
-				<Header>Materials</Header>
+				<Header>OperationRecords</Header>
 				<Content>
-					<OperationDrawer />
-
+					<h3> </h3>
+					<div><OperationDrawer /></div>
+					<h3> </h3>
+					<div><PullDrawer/></div>
+					<h3> </h3>
+					<div><OrderDrawer/></div>
+					<h3> </h3>
+					<div><DayShiftDrawer/></div>
+					<h3> </h3>
+					<div><StallChangeDrawer/></div>
 					<Table size="middle"
+						   key={this.state.list.index}
 						   columns={this.renderColumn}
 						   dataSource={this.state.list}
 					/>
@@ -226,25 +258,32 @@ class Material extends Component {
 		const {accountName} = this.props;
 		const {pageNo} = this.props;
 		const {size} = this.props;
-		this.getMaterials(pageNo, size, accountName);
+		this.getOperation(this.state.pageNo, this.state.size).then(r => console.log(r));
+		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDayShiftDrawer = this.handleDataFromDayShiftDrawer.bind(this);
+		this.handleDataFromOrderDrawer = this.handleDataFromOrderDrawer.bind(this);
+		this.handleDataFromPullDrawer = this.handleDataFromPullDrawer.bind(this);
+		this.handleDataFromStallChangeDrawer = this.handleDataFromStallChangeDrawer.bind(this);
+
 	}
 }
 
 
 
 const mapState = (state) => ({
-	list : state.getIn(['material','list']),
-	pageNo : state.getIn(['material','pageNo']),
-	size : state.getIn(['material','size']),
+	//list : state.getIn(['operation','list']),
+	pageNo : state.getIn(['operation','pageNo']),
+	size : state.getIn(['operation','size']),
 	loginStatus: state.getIn(['login', 'login']),
 	accountName : state.getIn(['login', 'account'])
 });
 
 const mapDispatch = (dispatch) => ({
-	getMaterials(pageNo,size) {
+	getOperationRecords(pageNo,size) {
 		dispatch(actionCreators.getOperationRecords(pageNo,size));
 	}
 });
 
-export default connect(mapState, mapDispatch)(withRouter(Material));
+export default connect(mapState, mapDispatch)(withRouter(OperationRecord));
 

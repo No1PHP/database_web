@@ -11,11 +11,11 @@ const changePage = (pageNo, size) => ({
 
 export const getOperationRecords = (pageNo,size) => {
 	return (dispatch) => {
-		axios.get('localhost:8000/OperationRecords'+'pageNo='+pageNo+'&'+'size='+size).then((res) => {
+		axios.get('localhost:8000/OperationRecords?'+'pageNo='+pageNo+'&'+'size='+size).then((res) => {
 			const result = res.data.data;
 			dispatch(changePage(result.pageNo, result.size));
-		}).catch(() => {
-
+		}).catch((e) => {
+			console.log(e.message);
 		})
 	}
 };

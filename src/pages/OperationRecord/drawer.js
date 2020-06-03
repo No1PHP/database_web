@@ -47,7 +47,7 @@ import { PlusOutlined } from '@ant-design/icons';
         render() {
             return (
                 <div>
-                    <Button type="primary" onClick={this.showDrawer}>
+                    <Button type="primary" onClick={this.showDrawer} block>
                         AddOperationRecords
                     </Button>
                     <Drawer
@@ -57,6 +57,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         onClose={this.onClose}
                         visible={this.state.visible}
                     >
+                    <Form>
                     <Form.Item
                             name="operationID"
                             rules={[
@@ -125,7 +126,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         }}
                         />
                     </Form.Item>
-
+                    </Form>
                     <Button onClick={()=>this.handToParent.bind(this)}>Add</Button>
 
                 </Drawer>

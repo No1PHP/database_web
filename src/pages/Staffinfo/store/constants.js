@@ -1,1 +1,1 @@
-export const GET_MATERIAL = 'Material/GET_MATERIAL';
+export const GET_STAFF = 'StaffInfo/getStaff';

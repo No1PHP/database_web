@@ -1,13 +1,14 @@
 import React, {Component, useState} from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
 import { actionCreators } from './store';
-import {Table, Tag, Space, Button, Drawer, Input} from 'antd';
+import {Table, Tag, Space, Button, Drawer, Input, BackTop} from 'antd';
 import { getIn } from 'immutable';
 import axios from "axios";
 import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
+import Link from "react-router-dom/Link";
 
 
 class Material extends Component {
@@ -97,15 +98,17 @@ class Material extends Component {
 			pageNo:'1',
 			size:'10',
 		};
-		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
 	}
+
 
 
     handleDataFromDrawer(data){
 		const dataList = {
-			materialData : data,
-			operation : 'Add'
+			materialName : data.name,
+			materialType: data.type,
+			unitPrice: data.unitPrice,
+			availablePeriod: data.availablePeriod,
+			operationName : 'Add'
 		};
 		this.addNewMaterial(dataList).catch((e)=>{
 			console.log(e)
@@ -114,10 +117,14 @@ class Material extends Component {
 	}
 
 
+//{materialName:'',materialType:'',unitPrice:'Float',availablePeriod:'',operationName:''}
 	handleDataFromDialogue(data){
 		const dataList = {
-			materialData : data,
-			operation : 'Update'
+			materialName : data.name,
+			materialType: data.type,
+			unitPrice: data.unitPrice,
+			availablePeriod: data.availablePeriod,
+			operationName : 'Modify'
 		};
 		this.updateData(dataList).catch((e)=>{
 			console.log(e)
@@ -125,28 +132,35 @@ class Material extends Component {
 	}
 
 
-	getMaterials = (pageNo,size,account) => {
-		return () => {
-			axios.get('localhost:8000/Material'+'pageNo='+pageNo+'&'+'size='+size+'&'+'account='+account).then((res) => {
-				const result = res.data.data;
+	getMaterials = (pageNo,size) => {
+
+			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Material').then((res) => {
+			//axios.get('/api/detail.json?page='+pageNo+'&'+'size='+size).then((res) => {
+				const result = res.data.list;
+				console.log(res);
+				console.log(res.data);
+				console.log(res.data.list);
 				this.setState(
 					{list : result}
 				)
 			}).catch((e) => {
-				console.log(e)
+				console.log(e.message)
 			})
-		}
+
 	};
 
 
 	//删除 传入食材名字
-	deleteData = (name) => {
+	deleteData (name) {
+
 		return (
-			axios.get('localhost:8000/Material/delete/'+'name='+name).then((res) => {
+			axios.get('http://localhost:8080/delete？id='+name+'&'+'name='+'Material').then((res) => {
 					const result = res.status;
-					console.log((result===400)?'item successfully changed':'change failed')
+					console.log((result===200)?'item successfully changed':'change failed')
 				}
-			)
+			).catch((e) => {
+				console.log(e)
+			})
 		)
 	}
 
@@ -155,11 +169,13 @@ class Material extends Component {
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-		axios.post('localhost:8000/Material/update',dataList).then((res) => {
+		axios.post('localhost:8080/Material/operate',dataList).then((res) => {
 		const result = res.status;
-		console.log((result===400)?'item successfully changed':'change failed')
+		console.log((result===200)?'item successfully changed':'change failed')
 				}
-			)
+			).catch((e)=>{
+			console.log(e)
+		})
 		)
 
 	}
@@ -169,7 +185,10 @@ class Material extends Component {
 		return (
 			axios.post('localhost:8000/Material/add',dataList).then((res) => {
 					const result = res.status;
-					console.log((result===400)?'Item successfully added':'Added failed')
+					console.log((result===200)?'Item successfully added':'Added failed')
+				}
+			).catch((e)=>{
+				console.log(e)
 				}
 			)
 		)
@@ -178,10 +197,13 @@ class Material extends Component {
 
 
 	renderColumn = [
+
 			{
 				title: 'Name',
 				dataIndex: 'name',
 				key: 'name',
+				//sorter: true
+				sorter: (a, b) => a.name.length - b.name.length
 			},
 			{
 				title: 'Type',
@@ -192,21 +214,26 @@ class Material extends Component {
 				title: 'UnitPrice',
 				dataIndex: 'unitPrice',
 				key: 'unitPrice',
+				sorter: (a, b) => a.unitPrice - b.unitPrice,
+				//sorter: true
 			},
 		   {
 			   title : 'AvailableAmount',
 			   dataIndex : 'availableAmount',
 			   key: 'availableAmount',
+			   sorter: (a, b) => a.availableAmount - b.availableAmount,
 		   },
 		   {
 			   title : 'AvailablePeriod',
 			   dataIndex : 'availablePeriod',
 			   key : 'availablePeriod',
-		   },
+
+	   },
 		   {
 		   	   title: 'MaterialOrders',
 			   dataIndex: 'materialOrders',
 			   key : 'materialOrders',
+			   sorter: (a, b) => a.materialOrders - b.materialOrders,
 		   },
 		   {
 			   title: 'Recipes',
@@ -217,6 +244,7 @@ class Material extends Component {
 			   title: 'MaterialUsages',
 			   dataIndex: 'materialUsages',
 			   key : 'materialUsages',
+
 		   },
 			{
 				title: 'Action',
@@ -225,7 +253,7 @@ class Material extends Component {
 				<Space size="middle">
 					{/*update dialogue*/}
 					<Dialogue />
-        　　     <a className="delete-data" onClick={this.deleteData(record.name)}>Delete</a>
+        　　     <a className="delete-data" onClick={(e)=>this.deleteData(record.name)}>Delete</a>
                 </Space>
 				),
 			},
@@ -234,8 +262,21 @@ class Material extends Component {
 
 
 	render() {
+		const {loginStatus, list} = this.props;
+		const style = {
+			//height: 40,
+			//width: 40,
+			//borderRadius: 4,
+			border:'right',
+			backgroundColor: '#1088e9',
+			color: '#fff',
+			textAlign: 'center',
+			fontSize: 14,
+		};
 
+		//if(loginStatus){
 		return (
+			<Link to={'/Material'}>
 			<DetailWrapper>
 				<Header>Materials</Header>
 				<Content>
@@ -245,34 +286,51 @@ class Material extends Component {
 					   columns={this.renderColumn}
 					   dataSource={this.state.list}
 				/>
+					<BackTop>
+						<div style={style}>UP</div>
+					</BackTop>
 				</Content>
+
 			</DetailWrapper>
+			</Link>
 		)
+	//}
+		/*else {
+			alert("please login first");
+			return <Redirect to='/login'/>
+		}*/
 	}
 
 	componentDidMount() {
 		const {accountName} = this.props;
-		const {pageNo} = this.props;
-		const {size} = this.props;
-		this.getMaterials(pageNo, size, accountName);
+		//const {pageNo} = this.props;
+		//const {size} = this.props;
+		//this.props.getMaterials(pageNo, size);
+		this.getMaterials(this.state.pageNo, this.state.size);
+		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
 	}
 }
 
 
 
 const mapState = (state) => ({
-    list : state.getIn(['material','list']),
-    pageNo : state.getIn(['material','pageNo']),
-    size : state.getIn(['material','size']),
+    //list : state.getIn(['material','list']),
+    //pageNo : state.getIn(['material','pageNo']),
+    //size : state.getIn(['material','size']),
 	loginStatus: state.getIn(['login', 'login']),
 	accountName : state.getIn(['login', 'account'])
 });
-
+/*
 const mapDispatch = (dispatch) => ({
+
     getMaterials(pageNo,size) {
         dispatch(actionCreators.getMaterials(pageNo,size));
     }
-});
 
-export default connect(mapState, mapDispatch)(withRouter(Material));
+
+});
+*/
+//export default connect(mapState, mapDispatch)(withRouter(Material));
+export default connect(mapState, null)(withRouter(Material));
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../login/store';
 import { Form, Checkbox, Input, Button} from "antd";
 import 'antd/dist/antd.css';
+import axios from "axios";
 import { ChangingPageWrapper } from './style'
 import {login} from "../login/store/actionCreators";
 
@@ -11,8 +12,14 @@ class passwordChanging extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            account:'',
+            password:'',
+            newPassword:'',
+            newPasswordAgain:''
+        }
     }
+
 
 
     // handleSubmit(account, password, newPassword, newPasswordAgain) {
@@ -51,6 +58,27 @@ class passwordChanging extends PureComponent {
     //
     //
     // }
+
+    changePassword = (account, oldPassword, newPassword, newPasswordAgain) =>{
+        const data={
+            account:account,
+            currentPassword:oldPassword,
+            newPassword:newPassword
+        }
+        if (newPassword === newPasswordAgain) {
+            axios.post('http://localhost:8080/account/passwordChanging',data).then((res)=>{
+                    alert(res.data.message);
+                }
+            ).catch(e=>{
+                console.log(e.message)
+            })
+        }
+        else{
+            alert("twice new Password doesn't match!");
+        }
+
+    }
+
 
     render() {
         const {loginStatus} = this.props;
@@ -99,9 +127,11 @@ class passwordChanging extends PureComponent {
                                     message: 'Please type username!',
                                 },
                             ]}>
-                            <Input innerRef={(input) => {
-                                this.account = input
-                            }}/>
+                            <Input type='account' onChange={(e) => {
+                                this.setState({
+                                    account: e.target.value
+                                })}
+                            }/>
                         </Form.Item>
                         <Form.Item
                             label="password"
@@ -112,9 +142,11 @@ class passwordChanging extends PureComponent {
                                     message: 'please type the old password!',
                                 },
                             ]}>
-                            <Input type='password' innerRef={(input) => {
-                                this.password = input
-                            }}/>
+                            <Input type='password' onChange={(e) => {
+                                this.setState({
+                                    password: e.target.value
+                                })}
+                            }/>
                         </Form.Item>
                         <Form.Item
                             label="newPassword"
@@ -125,9 +157,11 @@ class passwordChanging extends PureComponent {
                                     message: 'Please type the new password!',
                                 },
                             ]}>
-                            <Input type='password' innerRef={(input) => {
-                                this.newPassword = input
-                            }}/>
+                            <Input type='newPassword' onChange={(e) => {
+                                this.setState({
+                                    newPassword: e.target.value
+                                })}
+                            }/>
                         </Form.Item>
                         <Form.Item
                             label="newPasswordAgain"
@@ -138,15 +172,19 @@ class passwordChanging extends PureComponent {
                                     message: 'Please type the new password again!',
                                 },
                             ]}>
-                            <Input type='password' innerRef={(input) => {
-                                this.newPasswordAgain = input
-                            }}/>
+                            <Input type='newPasswordAgain' onChange={(e) => {
+                                this.setState({
+                                    newPasswordAgain: e.target.value
+                                })}
+                            }/>
                         </Form.Item>
                         <Form.Item {...tailLayout}>
 
                             <Button type="primary"
                                     htmlType="submit"
-                                    onClick={() => this.props.passwordChanging(this.account,this.password,this.newPassword,this.newPasswordAgain)}
+                                    onClick={() => {
+                                        this.changePassword()}
+                                    }
                             >
                                 Change password
                             </Button>
@@ -164,9 +202,7 @@ class passwordChanging extends PureComponent {
 }
 
 //也可前面handleSubmit中不登录鉴权，直接用mapState获取login/store/reducer中的登录状态，以此判断是否可修改密码
-const mapState = (state) => ({
-    loginStatus: state.getIn(['login', 'login'])
-})
+
 
 // 调用login/store/actionCreator中的passwordChanging操作
 // const mapDispatch = (dispatch) => {
@@ -177,11 +213,5 @@ const mapState = (state) => ({
 //     }
 // }
 
-const mapDispatch = (dispatch) => ({
-    passwordChanging(account, oldPassword, newPassword, newPasswordAgain){
-        dispatch(actionCreators.login(account, oldPassword, newPassword, newPasswordAgain))
-    }
-})
 
-
-export default connect(mapState, mapDispatch)(passwordChanging);
+export default (passwordChanging);

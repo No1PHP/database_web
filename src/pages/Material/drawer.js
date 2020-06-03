@@ -60,6 +60,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         onClose={this.onClose}
                         visible={this.state.visible}
                     >
+                    <Form>
                     <Form.Item
                             name="name"
                             rules={[
@@ -195,6 +196,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         }
                         }/>
                     </Form.Item>
+                    </Form>
                     <Button onClick={()=>this.handToParent.bind(this)}>Add</Button>
 
                 </Drawer>

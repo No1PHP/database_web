@@ -59,6 +59,7 @@ class Dialogue extends React.Component {
                         </Button>,
                     ]}
                 >
+                    <Form>
                     <Form.Item
                         name="operationID"
                         >
@@ -67,7 +68,8 @@ class Dialogue extends React.Component {
                                 data :{
                                     operationID: e.target.value
                                 }
-                            })
+                            });
+
                         }}/>
                     </Form.Item>
 
@@ -117,7 +119,7 @@ class Dialogue extends React.Component {
                             })
                         }}/>
                     </Form.Item>
-
+                    </Form>
                 </Modal>
             </div>
         );

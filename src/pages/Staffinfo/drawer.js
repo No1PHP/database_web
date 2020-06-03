@@ -10,14 +10,12 @@ import { PlusOutlined } from '@ant-design/icons';
             this.state = {
                 visible: false,
                 data: {
-                    name: '',
-                    type: '',
-                    unitPrice: '',
-                    availableAmount: '',
-                    availablePeriod: '',
-                    materialOrders: '',
-                    recipes: '',
-                    materialUsages: '',
+                    staffID:'',
+                    staffName:'',
+                    staffCategoryTypes:'',
+                    timeStartWorking:'',
+                    timeEndWorking:'',
+                    operationName:''
 
                 }
             }
@@ -51,150 +49,118 @@ import { PlusOutlined } from '@ant-design/icons';
             return (
                 <div>
                     <Button type="primary" onClick={this.showDrawer}>
-                        AddMaterial
+                        Add New Staff
                     </Button>
                     <Drawer
-                        title="New Material"
+                        title="New Staff"
                         placement="right"
                         closable={false}
                         onClose={this.onClose}
                         visible={this.state.visible}
                     >
+                        <Form>
                     <Form.Item
-                            name="name"
+                            name="staffID"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter name!',
+                                    message: 'Please enter staffID!',
                                 },
                             ]}>
-                            <Input placeholder={'name'} onChange={(e) => {
+                            <Input placeholder={'staffID'} onChange={(e) => {
                                 this.setState({
                                     data :{
-                                        name: e.target.value
+                                        staffID: e.target.value
                                     }
                                 })
                             }}/>
                     </Form.Item>
 
                     <Form.Item
-                        name="type"
+                        name="staffName"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter type!',
+                                message: 'Please enter staffName!',
                             },
                         ]}>
-                        <Input placeholder={'type'} onChange={(e) => {
+                        <Input placeholder={'staffName'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    type: e.target.value
+                                    staffName: e.target.value
                                 }
                             })
                         }
                         }/>
                     </Form.Item>
                     <Form.Item
-                        name="unitPrice"
+                        name="staffCategoryTypes"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter unitPrice!',
+                                message: 'Please enter staffCategoryTypes!',
                             },
                         ]}>
-                        <Input placeholder={'unitPrice'} onChange={(e) => {
+                        <Input placeholder={'staffCategoryTypes'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    unitPrice: e.target.value
+                                    staffCategoryTypes: e.target.value
                                 }
                             })
                         }}
                         />
                     </Form.Item>
                     <Form.Item
-                        name="availableAmount"
+                        name="timeStartWorking"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter availableAmount!',
+                                message: 'Please enter timeStartWorking!',
                             },
                         ]}>
-                        <Input placeholder={'availableAmount'} onChange={(e) => {
+                        <Input placeholder={'timeStartWorking'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    availableAmount: e.target.value
+                                    timeStartWorking: e.target.value
                                 }
                             })
                         }}
                         />
                     </Form.Item>
                     <Form.Item
-                        name="availablePeriod"
+                        name="timeEndWorking"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter availablePeriod!',
+                                message: 'Please enter timeEndWorking!',
                             },
                         ]}>
-                        <Input placeholder={'availablePeriod'} onChange={(e) => {
+                        <Input placeholder={'timeEndWorking'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    availablePeriod: e.target.value
+                                    timeEndWorking: e.target.value
                                 }
                             })
                         }}/>
                     </Form.Item>
                     <Form.Item
-                        name="materialOrders"
+                        name="operationName"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter materialOrders!',
+                                message: 'Please enter operationName!',
                             },
                         ]}>
-                        <Input placeholder={'materialOrders'} onChange={(e) => {
+                        <Input placeholder={'operationName'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    materialOrders: e.target.value
+                                    operationName: e.target.value
                                 }
                             })
                         }
                         }/>
                     </Form.Item>
-                    <Form.Item
-                        name="recipes"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter recipes!',
-                            },
-                        ]}>
-                        <Input placeholder={'recipes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipes: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
-                    <Form.Item
-                        name="materialUsages"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter materialUsages!',
-                            },
-                        ]}>
-                        <Input placeholder={'materialUsages'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialUsages: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
+                    </Form>
                     <Button onClick={()=>this.handToParent.bind(this)}>Add</Button>
 
                 </Drawer>

@@ -3,23 +3,22 @@ import * as constants from './constants';
 
 const defaultState = fromJS({
 	list: [{
-		name: 'egg',
-		key: '1',
-		type: 'food',
-		unitPrice: '12',
-		availableAmount: '100',
-		availablePeriod: '90 days',
-		materialOrders: '10',
-		recipes: 'egg and tomato',
-		materialUsages: 'everyday',
-	}],
+
+		staffID:'',
+		staffName:'',
+		staffCategoryTypes:'',
+		timeStartWorking:'',
+		timeEndWorking:'',
+		operationName:''
+
+}],
 	pageNo:'1',
 	size:'10',
 });
 
 export default (state = defaultState, action) => {
 	switch(action.type) {
-		case constants.GET_MATERIAL:
+		case constants.GET_STAFF:
 			{
 				const newState = JSON.parse(JSON.stringify(state));
 				newState.list = action.list;

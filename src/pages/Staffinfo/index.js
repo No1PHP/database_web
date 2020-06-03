@@ -10,89 +10,37 @@ import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
 
 
-class Material extends Component {
+class Staff extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			list: [
 				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
+					staffID:'',
+					staffName:'',
+					staffCategoryTypes:'',
+					timeStartWorking:'',
+					timeEndWorking:'',
+					operationName:''
 				},
 				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
+					staffID:'',
+					staffName:'',
+					staffCategoryTypes:'',
+					timeStartWorking:'',
+					timeEndWorking:'',
+					operationName:''
 				},
 				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
+					staffID:'',
+					staffName:'',
+					staffCategoryTypes:'',
+					timeStartWorking:'',
+					timeEndWorking:'',
+					operationName:''
 				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
+
 			],
 			pageNo:'1',
 			size:'10',
@@ -100,14 +48,22 @@ class Material extends Component {
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
 		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
 	}
-
-
+/*
+{staffID:'',staffName:'',
+	* staffCategoryTypes:'',timeStartWorking:'DATETIME',
+	* timeEndWorking:'DATETIME',
+	* operationName:''}
+	*/
 	handleDataFromDrawer(data){
 		const dataList = {
-			materialData : data,
-			operation : 'Add'
+			staffID : data.staffID,
+			staffName: data.staffName,
+			staffCategoryTypes: data.staffCategoryTypes,
+			timeStartWorking: data.timeStartWorking,
+			timeEndWorking: data.timeEndWorking,
+			operationName : 'AddStaff'
 		};
-		this.addNewMaterial(dataList).catch((e)=>{
+		this.addNewStaff(dataList).catch((e)=>{
 			console.log(e)
 		});
 
@@ -116,8 +72,12 @@ class Material extends Component {
 
 	handleDataFromDialogue(data){
 		const dataList = {
-			materialData : data,
-			operation : 'Update'
+			staffID : data.staffID,
+			staffName: data.staffName,
+			staffCategoryTypes: data.staffCategoryTypes,
+			timeStartWorking: data.timeStartWorking,
+			timeEndWorking: data.timeEndWorking,
+			operationName : 'ModifyStaff'
 		};
 		this.updateData(dataList).catch((e)=>{
 			console.log(e)
@@ -125,9 +85,9 @@ class Material extends Component {
 	}
 
 
-	getMaterials = (pageNo,size,account) => {
+	getStaff = (pageNo,size) => {
 		return () => {
-			axios.get('localhost:8000/Material'+'pageNo='+pageNo+'&'+'size='+size+'&'+'account='+account).then((res) => {
+			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Staff').then((res) => {
 				const result = res.data.data;
 				this.setState(
 					{list : result}
@@ -139,14 +99,16 @@ class Material extends Component {
 	};
 
 
-	//删除 传入食材名字
-	deleteData = (name) => {
+
+	deleteData = (staffID) => {
 		return (
-			axios.get('localhost:8000/Material/delete/'+'name='+name).then((res) => {
+			axios.get('http://localhost:8080/delete?'+'id='+staffID+'&'+'name=Staff').then((res) => {
 					const result = res.status;
-					console.log((result===400)?'item successfully changed':'change failed')
+					console.log((result===200)?'item successfully deleted':'delete failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 	}
 
@@ -155,23 +117,27 @@ class Material extends Component {
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-			axios.post('localhost:8000/Material/update',dataList).then((res) => {
+			axios.post('http://localhost:8080/Staff/operate',dataList).then((res) => {
 					const result = res.status;
-					console.log((result===400)?'item successfully changed':'change failed')
+					alert((result===200)?'Item successfully changed':'change failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 
 	}
 
 
-	addNewMaterial = (dataList) => {
+	addNewStaff = (dataList) => {
 		return (
-			axios.post('localhost:8000/Material/add',dataList).then((res) => {
+			axios.post('http://localhost:8080/Staff/operate',dataList).then((res) => {
 					const result = res.status;
-					console.log((result===400)?'Item successfully added':'Added failed')
+					alert((result===200)?'Item successfully added':'Added failed')
 				}
-			)
+			).catch((e)=>{
+				console.log(e.message)
+			})
 		)
 	}
 
@@ -179,44 +145,34 @@ class Material extends Component {
 
 	renderColumn = [
 		{
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
+			title: 'StaffID',
+			dataIndex: 'staffID',
+			key: 'staffID',
 		},
 		{
-			title: 'Type',
-			dataIndex: 'type',
-			key: 'type',
+			title: 'StaffName',
+			dataIndex: 'staffName',
+			key: 'staffName',
 		},
 		{
-			title: 'UnitPrice',
-			dataIndex: 'unitPrice',
-			key: 'unitPrice',
+			title: 'StaffCategoryTypes',
+			dataIndex: 'staffCategoryTypes',
+			key: 'staffCategoryTypes',
 		},
 		{
-			title : 'AvailableAmount',
-			dataIndex : 'availableAmount',
-			key: 'availableAmount',
+			title : 'TimeStartWorking',
+			dataIndex : 'timeStartWorking',
+			key: 'timeStartWorking',
 		},
 		{
-			title : 'AvailablePeriod',
-			dataIndex : 'availablePeriod',
-			key : 'availablePeriod',
+			title : 'TimeEndWorking',
+			dataIndex : 'timeEndWorking',
+			key : 'timeEndWorking',
 		},
 		{
-			title: 'MaterialOrders',
-			dataIndex: 'materialOrders',
-			key : 'materialOrders',
-		},
-		{
-			title: 'Recipes',
-			dataIndex: 'recipes',
-			key : 'recipes',
-		},
-		{
-			title: 'MaterialUsages',
-			dataIndex: 'materialUsages',
-			key : 'materialUsages',
+			title: 'OperationName',
+			dataIndex: 'operationName',
+			key : 'operationName',
 		},
 		{
 			title: 'Action',
@@ -225,7 +181,7 @@ class Material extends Component {
 				<Space size="middle">
 					{/*update dialogue*/}
 					<Dialogue />
-					<a className="delete-data" onClick={this.deleteData(record.name)}>Delete</a>
+					<a className="delete-data" onClick={(e)=>this.deleteData(record.staffID)}>Delete</a>
 				</Space>
 			),
 		},
@@ -237,7 +193,7 @@ class Material extends Component {
 
 		return (
 			<DetailWrapper>
-				<Header>Materials</Header>
+				<Header>Staff</Header>
 				<Content>
 					<MaterialDrawer/>
 
@@ -252,27 +208,25 @@ class Material extends Component {
 
 	componentDidMount() {
 		const {accountName} = this.props;
-		const {pageNo} = this.props;
-		const {size} = this.props;
-		this.getMaterials(pageNo, size, accountName);
+		this.getStaff(this.state.pageNo, this.state.size);
 	}
 }
 
 
 
 const mapState = (state) => ({
-	list : state.getIn(['material','list']),
-	pageNo : state.getIn(['material','pageNo']),
-	size : state.getIn(['material','size']),
+	//list : state.getIn(['staff','list']),
+	pageNo : state.getIn(['staff','pageNo']),
+	size : state.getIn(['staff','size']),
 	loginStatus: state.getIn(['login', 'login']),
 	accountName : state.getIn(['login', 'account'])
 });
 
 const mapDispatch = (dispatch) => ({
 	getMaterials(pageNo,size) {
-		dispatch(actionCreators.getMaterials(pageNo,size));
+		dispatch(actionCreators.getStaff(pageNo,size));
 	}
 });
 
-export default connect(mapState, mapDispatch)(withRouter(Material));
+export default connect(mapState, mapDispatch)(withRouter(Staff));
 

@@ -6,6 +6,7 @@
     "transform-decorators-legacy"
   ],
   "dependencies": {
+    "@ant-design/icons": "latest",
     "axios": "^0.18.0",
     "immutable": "^3.8.2",
     "react": "^16.4.0",
@@ -18,9 +19,9 @@
     "react-transition-group": "^2.3.1",
     "redux": "^4.0.0",
     "redux-immutable": "^4.0.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^3.3.2",
-    "@ant-design/icons": "latest"
+    "styled-components": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -27,3 +27,8 @@ export const Content = styled.div`
 		font-weight: bold;
 	}
 `;
+
+export const Drawer1= styled.div`
+	border-left = 10px;
+	
+`;

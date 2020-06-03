@@ -30,13 +30,16 @@ export const MenuWrapper = styled.div`
 `;
 
 export const UsernameWrapper = styled.div`
+
+
 	position: absolute;
-	top: 17px;
-	left: 700px;
+	top: 13px;
+	left: 740px;
 	display: block;
 	width: 100px;
 	height: 56px;
 	background-size: contain;
+	
 `;
 
 export const Nav = styled.div`

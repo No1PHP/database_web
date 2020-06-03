@@ -9,14 +9,12 @@ class Dialogue extends React.Component {
             loading: false,
             visible: false,
             data : {
-                name: '',
-                type: '',
-                unitPrice: '',
-                availableAmount: '',
-                availablePeriod: '',
-                materialOrders: '',
-                recipes: '',
-                materialUsages: '',
+                staffID:'',
+                staffName:'',
+                staffCategoryTypes:'',
+                timeStartWorking:'',
+                timeEndWorking:'',
+                operationName:''
 
             }
 
@@ -51,7 +49,7 @@ class Dialogue extends React.Component {
                 </a>
                 <Modal
                     visible={visible}
-                    title="Enter the update record you want to instill"
+                    title="Enter the update Staff information you want to instill"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
@@ -63,45 +61,46 @@ class Dialogue extends React.Component {
                         </Button>,
                     ]}
                 >
+                    <Form>
                     <Form.Item
-                        name="name"
+                        name="staffID"
                         >
-                        <Input placeholder={'name'} onChange={(e) => {
+                        <Input placeholder={'staffID'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    name: e.target.value
+                                    staffID: e.target.value
                                 }
                             })
                         }}/>
                     </Form.Item>
 
                     <Form.Item
-                        name="type"
+                        name="staffName"
                         >
-                        <Input placeholder={'type'} onChange={(e) => {
+                        <Input placeholder={'staffName'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    type: e.target.value
+                                    staffName: e.target.value
                                 }
                             })
                         }}/>
                     </Form.Item>
                     <Form.Item
-                        name="unitPrice"
+                        name="staffCategoryTypes"
                         >
-                        <Input placeholder={'unitPrice'} onChange={(e) => {
+                        <Input placeholder={'staffCategoryTypes'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    unitPrice: e.target.value
+                                    staffCategoryTypes: e.target.value
                                 }
                             })
                         }}
                         />
                     </Form.Item>
                     <Form.Item
-                        name="availableAmount"
+                        name="timeStartWorking"
                         >
-                        <Input placeholder={'availableAmount'} onChange={(e) => {
+                        <Input placeholder={'timeStartWorking'} onChange={(e) => {
                             this.setState({
                                 data :{
                                     availableAmount: e.target.value
@@ -111,49 +110,28 @@ class Dialogue extends React.Component {
                         />
                     </Form.Item>
                     <Form.Item
-                        name="availablePeriod"
+                        name="timeEndWorking"
                         >
-                        <Input placeholder={'availablePeriod'} onChange={(e) => {
+                        <Input placeholder={'timeEndWorking'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    availablePeriod: e.target.value
+                                    timeEndWorking: e.target.value
                                 }
                             })
                         }}/>
                     </Form.Item>
                     <Form.Item
-                        name="materialOrders"
+                        name="operationName"
                         >
-                        <Input placeholder={'materialOrders'} onChange={(e) => {
+                        <Input placeholder={'operationName'} onChange={(e) => {
                             this.setState({
                                 data :{
-                                    materialOrders: e.target.value
+                                    operationName: e.target.value
                                 }
                             })
                         }}/>
                     </Form.Item>
-                    <Form.Item
-                        name="recipes"
-                        >
-                        <Input placeholder={'recipes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipes: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="materialUsages"
-                        >
-                        <Input placeholder={'materialUsages'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialUsages: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
+                    </Form>
                 </Modal>
             </div>
         );
