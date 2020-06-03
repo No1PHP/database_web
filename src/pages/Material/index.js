@@ -169,7 +169,7 @@ class Material extends Component {
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-		axios.post('localhost:8080/Material/operate',dataList).then((res) => {
+		axios.post('http://localhost:8080/Material/operate',dataList).then((res) => {
 		const result = res.status;
 		console.log((result===200)?'item successfully changed':'change failed')
 				}
@@ -183,7 +183,7 @@ class Material extends Component {
 
 	addNewMaterial = (dataList) => {
 		return (
-			axios.post('localhost:8000/Material/add',dataList).then((res) => {
+			axios.post('http://localhost:8000/Material/add',dataList).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'Item successfully added':'Added failed')
 				}
