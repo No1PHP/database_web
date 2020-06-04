@@ -219,7 +219,7 @@ class OperationRecord extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue />
+					<Dialogue parent={this}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.operationID)}>Delete</a>
 				</Space>
 			),
@@ -235,15 +235,15 @@ class OperationRecord extends Component {
 				<Header>OperationRecords</Header>
 				<Content>
 					<h3> </h3>
-					<div><OperationDrawer /></div>
+					<div><OperationDrawer parent={this}/></div>
 					<h3> </h3>
-					<div><PullDrawer/></div>
+					<div><PullDrawer parent={this}/></div>
 					<h3> </h3>
-					<div><OrderDrawer/></div>
+					<div><OrderDrawer parent={this}/></div>
 					<h3> </h3>
-					<div><DayShiftDrawer/></div>
+					<div><DayShiftDrawer parent={[this]}/></div>
 					<h3> </h3>
-					<div><StallChangeDrawer/></div>
+					<div><StallChangeDrawer parent={this}/></div>
 					<Table size="middle"
 						   key={this.state.list.index}
 						   columns={this.renderColumn}

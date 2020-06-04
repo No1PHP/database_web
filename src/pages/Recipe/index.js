@@ -154,7 +154,7 @@ class Recipe extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue />
+					<Dialogue parent={this}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.recipeName)}>Delete</a>
 				</Space>
 			),
@@ -169,7 +169,7 @@ class Recipe extends Component {
 			<DetailWrapper>
 				<Header>Recipe</Header>
 				<Content>
-					<MaterialDrawer/>
+					<MaterialDrawer parent={this}/>
 
 					<Table size="middle"
 						   columns={this.renderColumn}

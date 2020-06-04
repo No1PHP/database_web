@@ -216,7 +216,7 @@ class Stall extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue />
+					<Dialogue parent={this}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.stallName)}>Delete</a>
 				</Space>
 			),
@@ -231,9 +231,9 @@ class Stall extends Component {
 			<DetailWrapper>
 				<Header>Stall</Header>
 				<Content>
-					<div><MaterialDrawer/></div>
+					<div><MaterialDrawer parent={this}/></div>
 					<h3> </h3>
-					<div><RecipeDeleteDialogue/></div>
+					<div><RecipeDeleteDialogue parent={this}/></div>
 					<Table size="middle"
 						   columns={this.renderColumn}
 						   dataSource={this.state.list}

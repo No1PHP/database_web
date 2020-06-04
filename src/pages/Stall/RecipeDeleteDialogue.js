@@ -50,7 +50,7 @@ class RecipeDeleteDialogue extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.handleOk.bind(this)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromRecipeDeleteDialogue(this.state.data)}>
                             Submit
                         </Button>,
                     ]}

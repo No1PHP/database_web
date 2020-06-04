@@ -109,7 +109,7 @@ class DayShiftDrawer extends React.Component {
                             />
                         </Form.Item>
                     </Form>
-                    <Button onClick={()=>this.handToParent.bind(this)}>Add</Button>
+                    <Button onClick={()=>this.props.parent.handleDataFromDayShiftDrawer(this.state.data)}>Add</Button>
 
                 </Drawer>
             </div>

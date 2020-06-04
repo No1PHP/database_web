@@ -181,7 +181,7 @@ class Transaction extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue />
+					<Dialogue parent={this}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.transactionID)}>Delete</a>
 				</Space>
 			),
@@ -196,7 +196,7 @@ class Transaction extends Component {
 			<DetailWrapper>
 				<Header>Transaction</Header>
 				<Content>
-					<MaterialDrawer/>
+					<MaterialDrawer parent={this}/>
 
 					<Table size="middle"
 						   columns={this.renderColumn}

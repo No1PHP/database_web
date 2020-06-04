@@ -44,7 +44,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
         handToParent = (e) => {
             const dataList = this.state.data;
-            this.props.handleDataFromDrawer(dataList);
+            this.props.parent.handleDataFromDrawer(dataList);
         }
 
 
@@ -198,7 +198,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         }/>
                     </Form.Item>
                     </Form>
-                    <Button onClick={(e)=>this.handToParent.bind(this)}>Add</Button>
+                    <Button onClick={(e)=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
 
                 </Drawer>
         </div>

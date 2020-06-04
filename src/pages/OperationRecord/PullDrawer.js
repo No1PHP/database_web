@@ -74,7 +74,7 @@ class PullDrawer extends React.Component {
 
 
                     </Form>
-                    <Button onClick={()=>this.handToParent.bind(this)}>Pull</Button>
+                    <Button onClick={()=>this.props.parent.handleDataFromPullDrawer(this.state.data)}>Pull</Button>
 
                 </Drawer>
             </div>

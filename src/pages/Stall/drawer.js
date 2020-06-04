@@ -161,7 +161,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         }/>
                     </Form.Item>
                         </Form>
-                    <Button onClick={()=>this.handToParent.bind(this)}>Add</Button>
+                    <Button onClick={()=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
 
                 </Drawer>
         </div>
