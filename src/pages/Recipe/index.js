@@ -87,7 +87,7 @@ class Recipe extends Component {
 
 	deleteData = (name) => {
 		return (
-			axios.get('http://localhost:8080/delete?id='+'name='+name+'&'+'name=Recipe').then((res) => {
+			axios.get('http://localhost:8080/delete?id='+name+'&'+'name=Recipe').then((res) => {
 					const result = res.status;
 					console.log((result===200)?'item successfully changed':'change failed')
 				}

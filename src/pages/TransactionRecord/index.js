@@ -100,7 +100,7 @@ class Transaction extends Component {
 	//删除 传入食材名字
 	deleteData = (id) => {
 		return (
-			axios.get('http://localhost:8080/delete？id='+id+'name=Transaction').then((res) => {
+			axios.get('http://localhost:8080/delete?id='+id+'&name=Transaction').then((res) => {
 					const result = res.status;
 					alert((result===400)?'item successfully deleted':'delete failed')
 				}
@@ -182,7 +182,7 @@ class Transaction extends Component {
 				<Space size="middle">
 					{/*update dialogue*/}
 					<Dialogue />
-					<a className="delete-data" onClick={(e)=>this.deleteData(record.name)}>Delete</a>
+					<a className="delete-data" onClick={(e)=>this.deleteData(record.transactionID)}>Delete</a>
 				</Space>
 			),
 		},

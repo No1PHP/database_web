@@ -154,7 +154,7 @@ class Material extends Component {
 	deleteData (name) {
 
 		return (
-			axios.get('http://localhost:8080/delete？id='+name+'&'+'name='+'Material').then((res) => {
+			axios.get('http://localhost:8080/delete?id='+name+'&'+'name='+'Material').then((res) => {
 					const result = res.status;
 					console.log((result===200)?'item successfully changed':'change failed')
 				}
