@@ -195,6 +195,11 @@ class Stall extends Component {
 			title: 'Recipes',   //TODO:删除菜谱
 			dataIndex : 'recipes',
 			key : 'recipes',
+			render: (recipes) => (
+				<span>
+            {recipes.map(c => <div>{c.index}</div>)}
+          </span>
+			)
 /*
 			render : (text, record) => (
 				this.state.list.map((item,dataIndex)=>{
