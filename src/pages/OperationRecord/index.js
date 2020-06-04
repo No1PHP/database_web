@@ -129,8 +129,8 @@ class OperationRecord extends Component {
 
 	getOperation = (pageNo,size) => {
 		return (
-			axios.get('localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Operation').then((res) => {
-				const result = res.data.data;
+			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'OperationRecord').then((res) => {
+				const result = res.data.result;
 				this.setState(
 					{list : result}
 				)
@@ -258,7 +258,7 @@ class OperationRecord extends Component {
 		const {accountName} = this.props;
 		const {pageNo} = this.props;
 		const {size} = this.props;
-		this.getOperation(this.state.pageNo, this.state.size).then(r => console.log(r));
+		this.getOperation(this.state.pageNo, this.state.size);
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
 		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
 		this.handleDataFromDayShiftDrawer = this.handleDataFromDayShiftDrawer.bind(this);

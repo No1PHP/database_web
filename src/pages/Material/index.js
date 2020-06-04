@@ -136,7 +136,7 @@ class Material extends Component {
 
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Material').then((res) => {
 			//axios.get('/api/detail.json?page='+pageNo+'&'+'size='+size).then((res) => {
-				const result = res.data.list;
+				const result = res.data.result;
 				console.log(res);
 				console.log(res.data);
 				console.log(res.data.list);
@@ -144,7 +144,7 @@ class Material extends Component {
 					{list : result}
 				)
 			}).catch((e) => {
-				console.log(e.message)
+				alert(e.message)
 			})
 
 	};

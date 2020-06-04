@@ -42,7 +42,8 @@ export const login = (account, password) => {
 	};
 	return (dispatch) => {
 		//axios.get('api/login.json?account='+account).then((res) => {
-		axios.post('http://localhost:8080/account/loginPage',data).then((res) => {
+		JSON.stringify(data);
+		axios.post('http://localhost:8080/account/loginPage?accountString='+ JSON.stringify(data)).then((res) => {
 			const result = res.data.data;
 			console.log("res:"+JSON.stringify(res));
 			console.log("res.data:"+JSON.stringify(res.data));

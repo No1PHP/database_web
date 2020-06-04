@@ -94,16 +94,16 @@ class Stall extends Component {
 
 
 	getStall = (pageNo, size) => {
-		return () => {
+		return (
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Stall').then((res) => {
-				const result = res.data.data;
+				const result = res.data.result;
 				this.setState(
 					{list : result}
 				)
 			}).catch((e) => {
 				console.log(e)
 			})
-		}
+		)
 	};
 
 

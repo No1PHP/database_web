@@ -84,16 +84,16 @@ class Transaction extends Component {
 
 
 	getTransaction = (pageNo, size) => {
-		return () => {
+		return (
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page=Transaction').then((res) => {
-				const result = res.data.data;
+				const result = res.data.result;
 				this.setState(
 					{list : result}
 				)
 			}).catch((e) => {
 				console.log(e)
 			})
-		}
+		)
 	};
 
 
