@@ -169,21 +169,20 @@ class Material extends Component {
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-		axios.post('http://localhost:8080/Material/operate',dataList).then((res) => {
-		const result = res.status;
-		console.log((result===200)?'item successfully changed':'change failed')
+			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
+					const result = res.status;
+					console.log((result===200)?'item successfully changed':'change failed')
 				}
 			).catch((e)=>{
-			console.log(e)
-		})
+				console.log(e)
+			})
 		)
-
 	}
 
 
 	addNewMaterial = (dataList) => {
 		return (
-			axios.post('http://localhost:8000/Material/add',dataList).then((res) => {
+			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'Item successfully added':'Added failed')
 				}
@@ -308,7 +307,7 @@ class Material extends Component {
 		//this.props.getMaterials(pageNo, size);
 		this.getMaterials(this.state.pageNo, this.state.size);
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
 	}
 }
 
@@ -333,4 +332,3 @@ const mapDispatch = (dispatch) => ({
 */
 //export default connect(mapState, mapDispatch)(withRouter(Material));
 export default connect(mapState, null)(withRouter(Material));
-
