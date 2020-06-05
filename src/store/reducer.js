@@ -22,7 +22,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
 	header: headerReducer,
-	home: homeReducer,
+	home: loginReducer,
 	material: materialReducer,
 	login: persistReducer(persistConfig,loginReducer),
 	operation: operationReducer,
