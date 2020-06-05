@@ -12,9 +12,7 @@ import { PlusOutlined } from '@ant-design/icons';
                 data: {
                     recipeName:'',
                     relevantIngredient:'',
-                    price:'',
-                    operationName:''
-
+                    price:''
                 }
             }
         }
@@ -66,11 +64,7 @@ import { PlusOutlined } from '@ant-design/icons';
                                 },
                             ]}>
                             <Input placeholder={'RecipeName'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        recipeName: e.target.value
-                                    }
-                                })
+                                this.state.data.recipeName = e.target.value;
                             }}/>
                     </Form.Item>
 
@@ -83,11 +77,7 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'RelevantIngredient, please separate different individuals with comma!'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    relevantIngredient: e.target.value
-                                }
-                            })
+                            this.state.data.relevantIngredient = e.target.value;
                         }
                         }/>
                     </Form.Item>
@@ -100,33 +90,12 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'Price'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    price: e.target.value
-                                }
-                            })
-                        }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="operationName"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter operationName!',
-                            },
-                        ]}>
-                        <Input placeholder={'OperationName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    operationName: e.target.value
-                                }
-                            })
+                            this.state.data.price = e.target.value;
                         }}
                         />
                     </Form.Item>
                     </Form>
-                    <Button onClick={()=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
+                    <Button onClick={this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
 
                 </Drawer>
         </div>

@@ -126,7 +126,6 @@ class Material extends Component {
 			availablePeriod: data.availablePeriod,
 			operationName : 'Modify'
 		};
-		alert("Dialogue")
 		this.updateData(dataList).catch((e)=>{
 			console.log(e)
 		});
@@ -252,7 +251,7 @@ class Material extends Component {
 				render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue parent={this}/>
+					<Dialogue parent={this} record={record}/>
         　　     <a className="delete-data" onClick={(e)=>this.deleteData(record.name)}>Delete</a>
                 </Space>
 				),

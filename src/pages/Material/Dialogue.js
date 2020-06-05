@@ -9,15 +9,10 @@ class Dialogue extends React.Component {
             loading: false,
             visible: false,
             data : {
-                name: '',
-                type: '',
-                unitPrice: '',
-                availableAmount: '',
-                availablePeriod: '',
-                materialOrders: '',
-                recipes: '',
-                materialUsages: '',
-
+                name: this.props.record.name,
+                type: this.props.record.type,
+                unitPrice: this.props.record.unitPrice,
+                availablePeriod: this.props.record.availablePeriod
             }
 
         };
@@ -59,7 +54,9 @@ class Dialogue extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromDialogue(this.state.data)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>{
+                            this.props.parent.handleDataFromDialogue(this.state.data)}
+                        }>
                             Submit
                         </Button>,
                     ]}
@@ -68,92 +65,29 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="name"
                         >
-                        <Input placeholder={'name'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    name: e.target.value
-                                }
-                            })
-                        }}/>
+                        <Input placeholder={'name'} defaultValue={this.props.record.name} readOnly/>
                     </Form.Item>
 
                     <Form.Item
                         name="type"
                         >
-                        <Input placeholder={'type'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    type: e.target.value
-                                }
-                            })
+                        <Input placeholder={'type'} defaultValue={this.props.record.type} onChange={(e) => {
+                            this.state.data.type = e.target.value;
                         }}/>
                     </Form.Item>
                     <Form.Item
                         name="unitPrice"
                         >
-                        <Input placeholder={'unitPrice'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    unitPrice: e.target.value
-                                }
-                            })
-                        }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="availableAmount"
-                        >
-                        <Input placeholder={'availableAmount'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    availableAmount: e.target.value
-                                }
-                            })
+                        <Input placeholder={'unitPrice'} defaultValue={this.props.record.unitPrice} onChange={(e) => {
+                            this.state.data.unitPrice = e.target.value;
                         }}
                         />
                     </Form.Item>
                     <Form.Item
                         name="availablePeriod"
                         >
-                        <Input placeholder={'availablePeriod'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    availablePeriod: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="materialOrders"
-                        >
-                        <Input placeholder={'materialOrders'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialOrders: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="recipes"
-                        >
-                        <Input placeholder={'recipes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipes: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="materialUsages"
-                        >
-                        <Input placeholder={'materialUsages'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialUsages: e.target.value
-                                }
-                            })
+                        <Input placeholder={'availablePeriod'} defaultValue={this.props.record.availablePeriod} onChange={(e) => {
+                            this.state.data.availablePeriod = e.target.value;
                         }}/>
                     </Form.Item>
                     </Form>

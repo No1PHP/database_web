@@ -40,7 +40,7 @@ class Recipe extends Component {
 			size:'10',
 		};
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
 	}
 
 
@@ -101,7 +101,7 @@ class Recipe extends Component {
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-			axios.post('http://localhost:8000/Recipe/modify',dataList).then((res) => {
+			axios.post('http://localhost:8080/Recipe/modify?recipeRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'item successfully changed':'change failed')
 				}
@@ -115,7 +115,7 @@ class Recipe extends Component {
 
 	addNewRecipe = (dataList) => {
 		return (
-			axios.post('http://localhost:8000/Material/modify',dataList).then((res) => {
+			axios.post('http://localhost:8080/Recipe/modify?recipeRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'Item successfully added':'Added failed')
 				}
@@ -154,7 +154,7 @@ class Recipe extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue parent={this}/>
+					<Dialogue parent={this} record={record}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.recipeName)}>Delete</a>
 				</Space>
 			),

@@ -9,14 +9,11 @@ class Dialogue extends React.Component {
             loading: false,
             visible: false,
             data : {
-                recipeName:'',
-                relevantIngredient:'',
-                price:'',
-                operationName:''
-
+                recipeName: this.props.record.recipeName,
+                relevantIngredient: this.props.record.relevantIngredient,
+                price: this.props.record.price
             }
         };
-
     }
 
     showModal = () => {
@@ -59,47 +56,21 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="recipeName"
                         >
-                        <Input placeholder={'RecipeName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipeName: e.target.value
-                                }
-                            })
-                        }}/>
+                        <Input placeholder={'RecipeName'} defaultValue={this.props.record.recipeName} readOnly/>
                     </Form.Item>
 
                     <Form.Item
                         name="relevantIngredient"
                         >
-                        <Input placeholder={'RelevantIngredient, please separate the different individuals with comma!'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    relevantIngredient: e.target.value
-                                }
-                            })
+                        <Input placeholder={'RelevantIngredient, please separate with space!'} defaultValue={this.props.record.relevantIngredient} onChange={(e) => {
+                            this.state.data.relevantIngredient = e.target.value;
                         }}/>
                     </Form.Item>
                     <Form.Item
                         name="price"
                         >
-                        <Input placeholder={'Price'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    price: e.target.value
-                                }
-                            })
-                        }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="operationName"
-                        >
-                        <Input placeholder={'OperationName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    operationName: e.target.value
-                                }
-                            })
+                        <Input placeholder={'Price'} defaultValue={this.props.record.price} onChange={(e) => {
+                            this.state.data.price = e.target.value;
                         }}
                         />
                     </Form.Item>

@@ -13,11 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
                     name: '',
                     type: '',
                     unitPrice: '',
-                    availableAmount: '',
-                    availablePeriod: '',
-                    materialOrders: '',
-                    recipes: '',
-                    materialUsages: '',
+                    availablePeriod: ''
 
                 }
             }
@@ -71,11 +67,7 @@ import { PlusOutlined } from '@ant-design/icons';
                                 },
                             ]}>
                             <Input placeholder={'name'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        name: e.target.value
-                                    }
-                                })
+                                this.state.data.name = e.target.value;
                             }}/>
                     </Form.Item>
 
@@ -88,13 +80,8 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'type'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    type: e.target.value
-                                }
-                            })
-                        }
-                        }/>
+                            this.state.data.type = e.target.value;
+                        }}/>
                     </Form.Item>
                     <Form.Item
                         name="unitPrice"
@@ -105,30 +92,8 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'unitPrice'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    unitPrice: e.target.value
-                                }
-                            })
-                        }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="availableAmount"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter availableAmount!',
-                            },
-                        ]}>
-                        <Input placeholder={'availableAmount'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    availableAmount: e.target.value
-                                }
-                            })
-                        }}
-                        />
+                            this.state.data.unitPrice = e.target.value;
+                        }}/>
                     </Form.Item>
                     <Form.Item
                         name="availablePeriod"
@@ -139,66 +104,11 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'availablePeriod'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    availablePeriod: e.target.value
-                                }
-                            })
+                            this.state.data.availablePeriod = e.target.value;
                         }}/>
                     </Form.Item>
-                    <Form.Item
-                        name="materialOrders"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter materialOrders!',
-                            },
-                        ]}>
-                        <Input placeholder={'materialOrders'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialOrders: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
-                    <Form.Item
-                        name="recipes"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter recipes!',
-                            },
-                        ]}>
-                        <Input placeholder={'recipes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipes: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
-                    <Form.Item
-                        name="materialUsages"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter materialUsages!',
-                            },
-                        ]}>
-                        <Input placeholder={'materialUsages'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    materialUsages: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
                     </Form>
-                    <Button onClick={(e)=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
+                    <Button onClick={this.handToParent}>Add</Button>
 
                 </Drawer>
         </div>
