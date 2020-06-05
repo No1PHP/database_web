@@ -59,14 +59,14 @@ class passwordChanging extends PureComponent {
     //
     // }
 
-    changePassword = (account, oldPassword, newPassword, newPasswordAgain) =>{
+    changePassword = () =>{
         const data={
-            account:account,
-            currentPassword:oldPassword,
-            newPassword:newPassword
+            account:this.state.account,
+            currentPassword:this.state.password,
+            newPassword:this.state.newPassword
         }
-        if (newPassword === newPasswordAgain) {
-            axios.post('http://localhost:8080/account/passwordChanging',data).then((res)=>{
+        if (this.state.newPassword === this.state.newPasswordAgain) {
+            axios.post('http://localhost:8080/account/passwordChanging?passwordChangeString='+JSON.stringify(data)).then((res)=>{
                     alert(res.data.message);
                 }
             ).catch(e=>{
@@ -128,10 +128,8 @@ class passwordChanging extends PureComponent {
                                 },
                             ]}>
                             <Input type='account' onChange={(e) => {
-                                this.setState({
-                                    account: e.target.value
-                                })}
-                            }/>
+                                this.state.account = e.target.value;
+                            }}/>
                         </Form.Item>
                         <Form.Item
                             label="password"
@@ -143,10 +141,8 @@ class passwordChanging extends PureComponent {
                                 },
                             ]}>
                             <Input type='password' onChange={(e) => {
-                                this.setState({
-                                    password: e.target.value
-                                })}
-                            }/>
+                                this.state.password = e.target.value;
+                            }}/>
                         </Form.Item>
                         <Form.Item
                             label="newPassword"
@@ -158,10 +154,8 @@ class passwordChanging extends PureComponent {
                                 },
                             ]}>
                             <Input type='newPassword' onChange={(e) => {
-                                this.setState({
-                                    newPassword: e.target.value
-                                })}
-                            }/>
+                                this.state.newPassword = e.target.value;
+                            }}/>
                         </Form.Item>
                         <Form.Item
                             label="newPasswordAgain"
@@ -173,10 +167,8 @@ class passwordChanging extends PureComponent {
                                 },
                             ]}>
                             <Input type='newPasswordAgain' onChange={(e) => {
-                                this.setState({
-                                    newPasswordAgain: e.target.value
-                                })}
-                            }/>
+                                this.state.newPasswordAgain = e.target.value;
+                            }}/>
                         </Form.Item>
                         <Form.Item {...tailLayout}>
 
