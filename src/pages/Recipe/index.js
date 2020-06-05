@@ -122,6 +122,11 @@ class Recipe extends Component {
 			key: 'price',
 		},
 		{
+			title: '30 day sales',
+			dataIndex: 'totalSales',
+			key: 'totalSales',
+		},
+		{
 			title: 'Action',
 			key: 'action',
 			render : (text, record) => (

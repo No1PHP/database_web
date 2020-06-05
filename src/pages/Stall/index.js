@@ -203,6 +203,11 @@ class Stall extends Component {
 			sorter: (a, b) => a.costLastMonth - b.costLastMonth
 		},
 		{
+			title : '30 day sales',
+			dataIndex : 'totalSales',
+			key: 'totalSales',
+		},
+		{
 			title: 'Recipes',   //TODO:删除菜谱
 			dataIndex : 'recipes',
 			key : 'recipes',
