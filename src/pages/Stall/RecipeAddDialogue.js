@@ -1,7 +1,7 @@
 import {Modal, Button, Form, Input, Drawer} from 'antd';
 import React from "react";
 
-class RecipeDeleteDialogue extends React.Component {
+class RecipeAddDialogue extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,11 +21,6 @@ class RecipeDeleteDialogue extends React.Component {
         });
     };
 
-    handleOk = () => {
-        const dataList = this.state.data;
-        this.props.handleDataFromRecipeDeleteDialogue(dataList);
-    };
-
     handleCancel = () => {
         this.setState({ visible: false });
     };
@@ -35,39 +30,39 @@ class RecipeDeleteDialogue extends React.Component {
         return (
             <div>
                 <Button onClick={this.showModal} block>
-                    Delete Recipes of Stall
+                    Add Recipes of Stall
                 </Button>
                 <Modal
                     visible={visible}
-                    title="Enter the recipes you want to delete"
+                    title="Enter the recipes you want to add"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromRecipeDeleteDialogue(this.state.data)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromRecipeAddDialogue(this.state.data)}>
                             Submit
                         </Button>,
                     ]}
                 >
                     <Form>
-                    <Form.Item
-                        name="stallName"
-                    >
-                        <Input placeholder={'StallName'} onChange={(e) => {
-                            this.state.data.stallName = e.target.value;
-                        }}/>
-                    </Form.Item>
+                        <Form.Item
+                            name="stallName"
+                        >
+                            <Input placeholder={'StallName'} onChange={(e) => {
+                                this.state.data.stallName = e.target.value;
+                            }}/>
+                        </Form.Item>
 
-                    <Form.Item
-                        name="recipes"
-                    >
-                        <Input placeholder={'Recipes(Please separate with space)'} onChange={(e) => {
-                            this.state.data.recipes = e.target.value;
-                        }}
-                        />
-                    </Form.Item>
+                        <Form.Item
+                            name="recipes"
+                        >
+                            <Input placeholder={'Recipes(Please separate with space)'} onChange={(e) => {
+                                this.state.data.recipes = e.target.value;
+                            }}
+                            />
+                        </Form.Item>
                     </Form>
 
                 </Modal>
@@ -77,4 +72,4 @@ class RecipeDeleteDialogue extends React.Component {
 }
 
 
-export default RecipeDeleteDialogue;
+export default RecipeAddDialogue;

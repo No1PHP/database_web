@@ -7,6 +7,8 @@ import { reducer as operationReducer } from '../pages/OperationRecord/store';
 import { reducer as staffReducer } from '../pages/Staffinfo/store';
 import { reducer as stallReducer } from '../pages/Stall/store';
 import { reducer as recipeReducer } from '../pages/Recipe/store';
+import { reducer as scheduleReducer } from '../pages/ScheduleRecord/store';
+import { reducer as orderReducer } from '../pages/MaterialOrder/store';
 import { reducer as transactionReducer } from '../pages/TransactionRecord/store';
 import { createStore } from 'redux'
 import {persistStore, persistReducer } from 'redux-persist';

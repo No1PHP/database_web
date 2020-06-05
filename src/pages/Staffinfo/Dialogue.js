@@ -9,21 +9,14 @@ class Dialogue extends React.Component {
             loading: false,
             visible: false,
             data : {
-                staffID:'',
-                staffName:'',
-                staffCategoryTypes:'',
-                timeStartWorking:'',
-                timeEndWorking:'',
-                operationName:''
-
+                staffID: this.props.record.staffID,
+                staffName: this.props.record.staffName,
+                staffCategoryTypes: this.props.record.staffCategoryTypes,
+                timeStartWorking: this.props.record.timeStartWorking,
+                timeEndWorking: this.props.record.timeEndWorking
             }
-
         };
-
     }
-
-
-
 
     showModal = () => {
         this.setState({
@@ -65,70 +58,37 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="staffID"
                         >
-                        <Input placeholder={'staffID'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    staffID: e.target.value
-                                }
-                            })
-                        }}/>
+                        <Input placeholder={'staffID'} defaultValue={this.props.record.staffID} readOnly/>
                     </Form.Item>
 
                     <Form.Item
                         name="staffName"
                         >
-                        <Input placeholder={'staffName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    staffName: e.target.value
-                                }
-                            })
+                        <Input placeholder={'staffName'} defaultValue={this.props.record.staffName} onChange={(e) => {
+                            this.state.data.staffName = e.target.value;
                         }}/>
                     </Form.Item>
                     <Form.Item
                         name="staffCategoryTypes"
                         >
-                        <Input placeholder={'staffCategoryTypes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    staffCategoryTypes: e.target.value
-                                }
-                            })
+                        <Input placeholder={'staffCategoryTypes'} defaultValue={this.props.record.staffCategoryTypes} onChange={(e) => {
+                            this.state.data.staffCategoryTypes = e.target.value;
                         }}
                         />
                     </Form.Item>
                     <Form.Item
                         name="timeStartWorking"
                         >
-                        <Input placeholder={'timeStartWorking'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    availableAmount: e.target.value
-                                }
-                            })
+                        <Input placeholder={'timeStartWorking'} defaultValue={this.props.record.timeStartWorking} onChange={(e) => {
+                            this.state.data.availableAmount = e.target.value;
                         }}
                         />
                     </Form.Item>
                     <Form.Item
                         name="timeEndWorking"
                         >
-                        <Input placeholder={'timeEndWorking'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    timeEndWorking: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="operationName"
-                        >
-                        <Input placeholder={'operationName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    operationName: e.target.value
-                                }
-                            })
+                        <Input placeholder={'timeEndWorking'} defaultValue={this.props.record.timeEndWorking} onChange={(e) => {
+                            this.state.data.timeEndWorking = e.target.value;
                         }}/>
                     </Form.Item>
                     </Form>

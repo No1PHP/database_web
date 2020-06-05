@@ -11,7 +11,6 @@ import {
 } from './style';
 import {Button, Select, Menu, Dropdown} from "antd";
 import { DownOutlined } from '@ant-design/icons';
-import OperationRecord from "../../pages/OperationRecord";
 import { Avatar } from 'antd';
 import axios from "axios"
 import { UserOutlined, AuditOutlined } from '@ant-design/icons';
@@ -26,7 +25,6 @@ class Header extends Component {
 					Material
 				</a>
 			</Menu.Item>
-
 			<Menu.Item>
 				<a rel="noopener noreferrer" href="/OperationRecord">
 					OperationRecord
@@ -47,11 +45,26 @@ class Header extends Component {
                     Stall
                 </a>
             </Menu.Item>
-            <Menu.Item>
-                <a rel="noopener noreferrer" href="./Transaction">
-                    TransactionRecord
-                </a>
-            </Menu.Item>
+			<Menu.Item>
+				<a rel="noopener noreferrer" href="./Transaction">
+					TransactionRecord
+				</a>
+			</Menu.Item>
+			<Menu.Item>
+				<a rel="noopener noreferrer" href="./ScheduleRecord">
+					ScheduleRecord
+				</a>
+			</Menu.Item>
+			<Menu.Item>
+				<a rel="noopener noreferrer" href="./MaterialOrder">
+					MaterialOrder
+				</a>
+			</Menu.Item>
+			<Menu.Item>
+				<a rel="noopener noreferrer" href="./MaterialUsage">
+					MaterialUsage
+				</a>
+			</Menu.Item>
 		</Menu>
 	);
 

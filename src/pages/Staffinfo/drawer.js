@@ -10,15 +10,14 @@ import { PlusOutlined } from '@ant-design/icons';
             this.state = {
                 visible: false,
                 data: {
-                    staffID:'',
                     staffName:'',
                     staffCategoryTypes:'',
                     timeStartWorking:'',
-                    timeEndWorking:'',
-                    operationName:''
+                    timeEndWorking:''
 
                 }
             }
+            this.handToParent = this.handToParent.bind(this);
         }
 
         setVisible = (value) => {
@@ -41,7 +40,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
         handToParent = () => {
             const dataList = this.state.data;
-            this.props.handleDataFromDrawer(dataList);
+            this.props.parent.handleDataFromDrawer(dataList);
         }
 
 
@@ -59,22 +58,6 @@ import { PlusOutlined } from '@ant-design/icons';
                         visible={this.state.visible}
                     >
                         <Form>
-                    <Form.Item
-                            name="staffID"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter staffID!',
-                                },
-                            ]}>
-                            <Input placeholder={'staffID'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        staffID: e.target.value
-                                    }
-                                })
-                            }}/>
-                    </Form.Item>
 
                     <Form.Item
                         name="staffName"
@@ -85,11 +68,7 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'staffName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    staffName: e.target.value
-                                }
-                            })
+                            this.state.data.staffName = e.target.value;
                         }
                         }/>
                     </Form.Item>
@@ -102,11 +81,7 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'staffCategoryTypes'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    staffCategoryTypes: e.target.value
-                                }
-                            })
+                            this.state.data.staffCategoryTypes = e.target.value;
                         }}
                         />
                     </Form.Item>
@@ -119,11 +94,7 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'timeStartWorking'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    timeStartWorking: e.target.value
-                                }
-                            })
+                            this.state.data.timeStartWorking = e.target.value;
                         }}
                         />
                     </Form.Item>
@@ -136,32 +107,11 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'timeEndWorking'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    timeEndWorking: e.target.value
-                                }
-                            })
+                            this.state.data.timeEndWorking = e.target.value;
                         }}/>
                     </Form.Item>
-                    <Form.Item
-                        name="operationName"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter operationName!',
-                            },
-                        ]}>
-                        <Input placeholder={'operationName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    operationName: e.target.value
-                                }
-                            })
-                        }
-                        }/>
-                    </Form.Item>
                     </Form>
-                    <Button onClick={()=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
+                    <Button onClick={this.handToParent}>Add</Button>
 
                 </Drawer>
         </div>

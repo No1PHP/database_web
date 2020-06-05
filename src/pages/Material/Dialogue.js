@@ -14,13 +14,8 @@ class Dialogue extends React.Component {
                 unitPrice: this.props.record.unitPrice,
                 availablePeriod: this.props.record.availablePeriod
             }
-
         };
-
     }
-
-
-
 
     showModal = () => {
         this.setState({

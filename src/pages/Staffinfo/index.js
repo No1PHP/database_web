@@ -8,6 +8,7 @@ import { getIn } from 'immutable';
 import axios from "axios";
 import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
+import DayShiftDrawer from "../Staffinfo/DayShiftDrawer";
 
 
 class Staff extends Component {
@@ -15,38 +16,10 @@ class Staff extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			list: [
-				{
-					staffID:'',
-					staffName:'',
-					staffCategoryTypes:'',
-					timeStartWorking:'',
-					timeEndWorking:'',
-					operationName:''
-				},
-				{
-					staffID:'',
-					staffName:'',
-					staffCategoryTypes:'',
-					timeStartWorking:'',
-					timeEndWorking:'',
-					operationName:''
-				},
-				{
-					staffID:'',
-					staffName:'',
-					staffCategoryTypes:'',
-					timeStartWorking:'',
-					timeEndWorking:'',
-					operationName:''
-				},
-
-			],
+			list: [],
 			pageNo:'1',
 			size:'10',
 		};
-		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
 	}
 /*
 {staffID:'',staffName:'',
@@ -84,9 +57,23 @@ class Staff extends Component {
 		});
 	}
 
+	handleDataFromDayShiftDrawer(data){
+		const dataList = {
+			operationType: "DAY_SHIFT",
+			body: {
+				staffID : data.staffID,
+				startTime: data.startTime,
+				endTime: data.endTime
+			}
+		};
+		this.scheduleStaff(dataList).catch((e)=>{
+			console.log(e)
+		});
+	}
+
 
 	getStaff = (pageNo,size) => {
-		return (
+		(
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Staff').then((res) => {
 				const result = res.data.result;
 				this.setState(
@@ -97,8 +84,6 @@ class Staff extends Component {
 			})
 		)
 	};
-
-
 
 	deleteData = (staffID) => {
 		return (
@@ -112,12 +97,9 @@ class Staff extends Component {
 		)
 	}
 
-
-
-
 	updateData = (dataList) => {//传本项的datalist
 		return (
-			axios.post('http://localhost:8080/Staff/operate',dataList).then((res) => {
+			axios.post('http://localhost:8080/Staff/operate?staffRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					alert((result===200)?'Item successfully changed':'change failed')
 				}
@@ -128,10 +110,9 @@ class Staff extends Component {
 
 	}
 
-
 	addNewStaff = (dataList) => {
 		return (
-			axios.post('http://localhost:8080/Staff/operate',dataList).then((res) => {
+			axios.post('http://localhost:8080/Staff/operate?staffRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					alert((result===200)?'Item successfully added':'Added failed')
 				}
@@ -141,7 +122,16 @@ class Staff extends Component {
 		)
 	}
 
-
+	scheduleStaff = (dataList) => {
+		return (
+			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
+				const result = res.status;
+				alert((result===200)?'succeed':'Day Shift modify failed');
+			}).catch((e) => {
+				console.log(e)
+			})
+		)
+	}
 
 	renderColumn = [
 		{
@@ -170,32 +160,25 @@ class Staff extends Component {
 			key : 'timeEndWorking',
 		},
 		{
-			title: 'OperationName',
-			dataIndex: 'operationName',
-			key : 'operationName',
-		},
-		{
 			title: 'Action',
 			key: 'action',
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue />
+					<DayShiftDrawer parent={this} record={record}/>
+					<Dialogue parent={this} record={record}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.staffID)}>Delete</a>
 				</Space>
 			),
 		},
 	];
 
-
-
 	render() {
-
 		return (
 			<DetailWrapper>
 				<Header>Staff</Header>
 				<Content>
-					<MaterialDrawer/>
+					<MaterialDrawer parent={this}/>
 
 					<Table size="middle"
 						   columns={this.renderColumn}
@@ -209,6 +192,9 @@ class Staff extends Component {
 	componentDidMount() {
 		const {accountName} = this.props;
 		this.getStaff(this.state.pageNo, this.state.size);
+		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
+		this.handleDataFromDayShiftDrawer = this.handleDataFromDayShiftDrawer.bind(this);
 	}
 }
 

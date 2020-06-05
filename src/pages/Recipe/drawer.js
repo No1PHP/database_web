@@ -15,6 +15,7 @@ import { PlusOutlined } from '@ant-design/icons';
                     price:''
                 }
             }
+            this.handToParent = this.handToParent.bind(this);
         }
 
         setVisible = (value) => {
@@ -37,7 +38,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
         handToParent = () => {
             const dataList = this.state.data;
-            this.props.handleDataFromDrawer(dataList);
+            this.props.parent.handleDataFromDrawer(dataList);
         }
 
 
@@ -95,7 +96,7 @@ import { PlusOutlined } from '@ant-design/icons';
                         />
                     </Form.Item>
                     </Form>
-                    <Button onClick={this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
+                    <Button onClick={this.handToParent}>Add</Button>
 
                 </Drawer>
         </div>

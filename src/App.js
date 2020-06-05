@@ -12,6 +12,9 @@ import Staff from './pages/Staffinfo';
 import Stall from './pages/Stall';
 import Recipe from './pages/Recipe';
 import Transaction from "./pages/TransactionRecord";
+import ScheduleRecord from "./pages/ScheduleRecord";
+import MaterialOrder from "./pages/MaterialOrder";
+import MaterialUsage from "./pages/MaterialUsage";
 
 class App extends Component {
   render() {
@@ -21,7 +24,7 @@ class App extends Component {
       		<div>
             <Header />
       			<Route path='/' exact component={Home}></Route>
-            <Route path='/login' exact component={Login}></Route>
+                <Route path='/login' exact component={Login}></Route>
                 <Route path='/Material' exact component={Material}></Route>
                 <Route path='/passwordChanging' exact component={passwordChanging}></Route>
                 <Route path='/OperationRecord' exact component={OperationRecord}></Route>
@@ -29,8 +32,10 @@ class App extends Component {
                 <Route path='/Stall' exact component={Stall}></Route>
                 <Route path='/Recipe' exact component={Recipe}></Route>
                 <Route path='/Transaction' exact component={Transaction}></Route>
-
-      		</div>
+                <Route path='/ScheduleRecord' exact component={ScheduleRecord}></Route>
+                <Route path='/MaterialOrder' exact component={MaterialOrder}></Route>
+                <Route path='/MaterialUsage' exact component={MaterialUsage}></Route>
+            </div>
       	</BrowserRouter>
       </Provider>
     );

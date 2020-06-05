@@ -8,7 +8,7 @@ import { getIn } from 'immutable';
 import axios from "axios";
 
 
-class OperationRecord extends Component {
+class MaterialOrder extends Component {
 
 	constructor(props) {
 		super(props);
@@ -17,12 +17,11 @@ class OperationRecord extends Component {
 			pageNo:'1',
 			size:'10',
 		};
-
 	}
 
 	getOperation = (pageNo,size) => {
 		return (
-			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'OperationRecord').then((res) => {
+			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'MaterialOrder').then((res) => {
 				const result = res.data.result;
 				this.setState(
 					{list : result}
@@ -30,13 +29,30 @@ class OperationRecord extends Component {
 			}).catch((e) => {
 				console.log(e)
 			}))
-
 	};
 
 	//删除
 	deleteData = (name) => {
 		return (
-			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=OperationRecord').then((res) => {
+			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=MaterialOrder').then((res) => {
+					const result = res.status;
+					alert((result===200)?'item successfully changed':'change failed')
+				}
+			).catch((e)=>{
+				console.log(e.message)
+			})
+		)
+	}
+
+	confirm = (id) => {
+		const dataList = {
+			operationType: "PULL",
+			body: {
+				operationID : id
+			}
+		};
+		return (
+			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					alert((result===200)?'item successfully changed':'change failed')
 				}
@@ -48,37 +64,38 @@ class OperationRecord extends Component {
 
 	renderColumn = [
 		{
-			title: 'OperationID',
-			dataIndex: 'operationID',
-			key: 'operationID',
-			sorter: (a, b) => a.operationID - b.operationID
+			title: 'Operation order',
+			dataIndex: 'operationOrderID',
+			key: 'operationOrderID',
+			sorter: (a, b) => a.operationOrderID - b.operationOrderID
 		},
 		{
-			title: 'StaffID',
-			dataIndex: 'staffID',
-			key: 'staffID',
+			title: 'Operation storage',
+			dataIndex: 'operationStorageID',
+			key: 'operationStorageID',
 		},
 		{
-			title: 'OperationType',
-			dataIndex: 'operationType',
-			key: 'operationType',
+			title: 'MaterialName',
+			dataIndex: 'materialName',
+			key: 'materialName',
 		},
 		{
-			title : 'Note',
-			dataIndex : 'note',
-			key: 'note',
+			title : 'MaterialAmount',
+			dataIndex : 'materialAmount',
+			key: 'materialAmount',
 		},
 		{
-			title : 'OperationTime',
-			dataIndex : 'operationTime',
-			key : 'operationTime',
+			title : 'UsedAmount',
+			dataIndex : 'usedAmount',
+			key: 'usedAmount',
 		},
 		{
 			title: 'Action',
 			key: 'action',
 			render : (text, record) => (
 				<Space size="middle">
-					<a className="delete-data" onClick={(e)=>this.deleteData(record.operationID)}>Delete</a>
+					<a className="delete-data" onClick={(e)=>this.confirm(record.operationOrderID)}>confirm</a>
+					<a className="delete-data" onClick={(e)=>this.deleteData(record.operationOrderID)}>Delete</a>
 				</Space>
 			),
 		},
@@ -87,7 +104,7 @@ class OperationRecord extends Component {
 	render() {
 		return (
 			<DetailWrapper>
-				<Header>OperationRecords</Header>
+				<Header>MaterialOrders</Header>
 				<Content>
 					<Table size="middle"
 						   columns={this.renderColumn}
@@ -118,9 +135,9 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
 	getOperationRecords(pageNo,size) {
-		dispatch(actionCreators.getOperationRecords(pageNo,size));
+		dispatch(actionCreators.getMaterialOrders(pageNo,size));
 	}
 });
 
-export default connect(mapState, mapDispatch)(withRouter(OperationRecord));
+export default connect(mapState, mapDispatch)(withRouter(MaterialOrder));
 

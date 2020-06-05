@@ -9,6 +9,8 @@ import axios from "axios";
 import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
 import RecipeDeleteDialogue from "./RecipeDeleteDialogue";
+import RecipeAddDialogue from "./RecipeAddDialogue";
+import StallChangeDrawer from "../Stall/StallChangeDrawer";
 
 
 class Stall extends Component {
@@ -16,42 +18,13 @@ class Stall extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			list: [
-				{
-					stallName:'',
-					stallLocation:'',
-					stallRent:'',
-					costLastMonth:'',
-					operationName:'',
-					recipes:['小笼包','饺子'],
-				},
-				{
-					stallName:'',
-					stallLocation:'',
-					stallRent:'',
-					costLastMonth:'',
-					operationName:'',
-					recipes:[],
-				},
-				{
-					stallName:'',
-					stallLocation:'',
-					stallRent:'',
-					costLastMonth:'',
-					operationName:'',
-					recipes:[],
-				},
-
-			],
+			list: [],
 			pageNo:'1',
 			size:'10',
 		};
-		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromRecipeDeleteDialogue = this.handleDataFromRecipeDeleteDialogue.bind(this);
 	}
 
-  handleDataFromRecipeDeleteDialogue(data){
+	handleDataFromRecipeDeleteDialogue(data){
 		const dataList = {
 			stallName : data.stallName,
 			recipes:data.recipes,
@@ -59,7 +32,17 @@ class Stall extends Component {
 		}
 		this.deleteRecipeForStall(dataList).then();
 
-  }
+	}
+
+	handleDataFromRecipeAddDialogue(data){
+		const dataList = {
+			stallName : data.stallName,
+			recipes:data.recipes,
+			operationName: 'AddRecipeForStall'
+		}
+		this.addRecipeForStall(dataList).then();
+
+	}
 
 
 	handleDataFromDrawer(data){
@@ -77,7 +60,6 @@ class Stall extends Component {
 
 	}
 
-
 	handleDataFromDialogue(data){
 		const dataList = {
 			stallName : data.stallName,
@@ -92,9 +74,22 @@ class Stall extends Component {
 		});
 	}
 
+	handleDataFromStallChangeDrawer(data){
+		const dataList = {
+			operationType: "STALL_CHANGE",
+			body: {
+				stallName : data.stallName,
+				newLocation: data.newLocation
+			}
+		};
+		this.changeLocation(dataList).catch((e)=>{
+			console.log(e)
+		});
+	}
+
 
 	getStall = (pageNo, size) => {
-		return (
+		(
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Stall').then((res) => {
 				const result = res.data.result;
 				this.setState(
@@ -120,12 +115,11 @@ class Stall extends Component {
 		)
 	}
 
-
 	deleteRecipeForStall = (requestJson) =>{
 		return(
-			axios.post('http://localhost:8080/Stall/oper',requestJson).then((res)=>{
-				const result = res.status;
-				alert((result===200)?'succeed':'delete failed');
+			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(requestJson)).then((res)=>{
+					const result = res.status;
+					alert((result===200)?'succeed':'delete failed');
 				}
 
 			).catch(e=>{
@@ -134,11 +128,22 @@ class Stall extends Component {
 		)
 	}
 
+	addRecipeForStall = (requestJson) =>{
+		return(
+			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(requestJson)).then((res)=>{
+					const result = res.status;
+					alert((result===200)?'succeed':'add failed');
+				}
 
+			).catch(e=>{
+				console.log(e)
+			})
+		)
+	}
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
-			axios.post('http://localhost:8080/Stall/oper',dataList).then((res) => {
+			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'item successfully changed':'change failed')
 				}
@@ -149,12 +154,23 @@ class Stall extends Component {
 
 	}
 
-
 	addNewStall = (dataList) => {
 		return (
-			axios.post('http://localhost:8080/Stall',dataList).then((res) => {
+			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===400)?'Item successfully added':'Added failed')
+				}
+			).catch((e)=>{
+				console.log(e.message)
+			})
+		)
+	}
+
+	changeLocation = (dataList) => {
+		return (
+			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
+					const result = res.status;
+					console.log((result===200)?'Item successfully changed':'failed')
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -187,28 +203,9 @@ class Stall extends Component {
 			sorter: (a, b) => a.costLastMonth - b.costLastMonth
 		},
 		{
-			title : 'OperationName',
-			dataIndex : 'operationName',
-			key : 'operationName',
-		},
-		{
 			title: 'Recipes',   //TODO:删除菜谱
 			dataIndex : 'recipes',
 			key : 'recipes',
-			render: (recipes) => (
-				<span>
-            {recipes.map(c => <div>{c.index}</div>)}
-          </span>
-			)
-/*
-			render : (text, record) => (
-				this.state.list.map((item,dataIndex)=>{
-					//<a onClick={(e)=>this.deleteRecipe(record.stallName,item.recipes)}>{item.recipes}</a>
-				}
-				)
-
-			),
-*/
 		},
 		{
 			title: 'Action',
@@ -216,7 +213,7 @@ class Stall extends Component {
 			render : (text, record) => (
 				<Space size="middle">
 					{/*update dialogue*/}
-					<Dialogue parent={this}/>
+					<Dialogue parent={this} record={record}/>
 					<a className="delete-data" onClick={(e)=>this.deleteData(record.stallName)}>Delete</a>
 				</Space>
 			),
@@ -226,7 +223,6 @@ class Stall extends Component {
 
 
 	render() {
-
 		return (
 			<DetailWrapper>
 				<Header>Stall</Header>
@@ -234,6 +230,10 @@ class Stall extends Component {
 					<div><MaterialDrawer parent={this}/></div>
 					<h3> </h3>
 					<div><RecipeDeleteDialogue parent={this}/></div>
+					<h3> </h3>
+					<div><RecipeAddDialogue parent={this}/></div>
+					<h3> </h3>
+					<div><StallChangeDrawer parent={this}/></div>
 					<Table size="middle"
 						   columns={this.renderColumn}
 						   dataSource={this.state.list}
@@ -246,6 +246,11 @@ class Stall extends Component {
 	componentDidMount() {
 		const {accountName} = this.props;
 		this.getStall(this.state.pageNo, this.state.size);
+		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
+		this.handleDataFromRecipeDeleteDialogue = this.handleDataFromRecipeDeleteDialogue.bind(this);
+		this.handleDataFromRecipeAddDialogue = this.handleDataFromRecipeAddDialogue.bind(this);
+		this.handleDataFromStallChangeDrawer = this.handleDataFromStallChangeDrawer.bind(this);
 	}
 }
 

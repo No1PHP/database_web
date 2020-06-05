@@ -8,7 +8,7 @@ import { getIn } from 'immutable';
 import axios from "axios";
 
 
-class OperationRecord extends Component {
+class ScheduleRecord extends Component {
 
 	constructor(props) {
 		super(props);
@@ -20,9 +20,9 @@ class OperationRecord extends Component {
 
 	}
 
-	getOperation = (pageNo,size) => {
-		return (
-			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'OperationRecord').then((res) => {
+	getScheduleRecord = (pageNo,size) => {
+		(
+			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'ScheduleRecord').then((res) => {
 				const result = res.data.result;
 				this.setState(
 					{list : result}
@@ -36,7 +36,7 @@ class OperationRecord extends Component {
 	//删除
 	deleteData = (name) => {
 		return (
-			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=OperationRecord').then((res) => {
+			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=ScheduleRecord').then((res) => {
 					const result = res.status;
 					alert((result===200)?'item successfully changed':'change failed')
 				}
@@ -59,19 +59,14 @@ class OperationRecord extends Component {
 			key: 'staffID',
 		},
 		{
-			title: 'OperationType',
-			dataIndex: 'operationType',
-			key: 'operationType',
+			title : 'TimeStartWorking',
+			dataIndex : 'timeScheduledToStartWorking',
+			key: 'timeScheduledToStartWorking',
 		},
 		{
-			title : 'Note',
-			dataIndex : 'note',
-			key: 'note',
-		},
-		{
-			title : 'OperationTime',
-			dataIndex : 'operationTime',
-			key : 'operationTime',
+			title : 'TimeEndWorking',
+			dataIndex : 'timeScheduledToEndWorking',
+			key : 'timeScheduledToEndWorking',
 		},
 		{
 			title: 'Action',
@@ -87,8 +82,10 @@ class OperationRecord extends Component {
 	render() {
 		return (
 			<DetailWrapper>
-				<Header>OperationRecords</Header>
+				<Header>ScheduleRecord</Header>
 				<Content>
+{/*					<h3> </h3>
+					<div><PullDrawer parent={this}/></div>*/}
 					<Table size="middle"
 						   columns={this.renderColumn}
 						   dataSource={this.state.list}
@@ -102,7 +99,7 @@ class OperationRecord extends Component {
 		const {accountName} = this.props;
 		const {pageNo} = this.props;
 		const {size} = this.props;
-		this.getOperation(this.state.pageNo, this.state.size);;
+		this.getScheduleRecord(this.state.pageNo, this.state.size);;
 	}
 }
 
@@ -118,9 +115,9 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
 	getOperationRecords(pageNo,size) {
-		dispatch(actionCreators.getOperationRecords(pageNo,size));
+		dispatch(actionCreators.getScheduleRecords(pageNo,size));
 	}
 });
 
-export default connect(mapState, mapDispatch)(withRouter(OperationRecord));
+export default connect(mapState, mapDispatch)(withRouter(ScheduleRecord));
 

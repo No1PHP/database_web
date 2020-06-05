@@ -14,7 +14,6 @@ import { PlusOutlined } from '@ant-design/icons';
                     type: '',
                     unitPrice: '',
                     availablePeriod: ''
-
                 }
             }
             this.handToParent = this.handToParent.bind(this);

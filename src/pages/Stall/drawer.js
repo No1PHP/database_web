@@ -12,13 +12,10 @@ import { PlusOutlined } from '@ant-design/icons';
                 data: {
                     stallName:'',
                     stallLocation:'',
-                    stallRent:'',
-                    costLastMonth:'',
-                    operationName:'',
-                    recipes:'',
-
+                    stallRent:''
                 }
-            }
+            };
+            this.handToParent = this.handToParent.bind(this);
         }
 
         setVisible = (value) => {
@@ -41,7 +38,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
         handToParent = () => {
             const dataList = this.state.data;
-            this.props.handleDataFromDrawer(dataList);
+            this.props.parent.handleDataFromDrawer(dataList);
         }
 
 
@@ -68,11 +65,7 @@ import { PlusOutlined } from '@ant-design/icons';
                                 },
                             ]}>
                             <Input placeholder={'StallName'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        stallName: e.target.value
-                                    }
-                                })
+                                this.state.data.stallName = e.target.value;
                             }}/>
                     </Form.Item>
 
@@ -85,11 +78,7 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'StallLocation'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    stallLocation: e.target.value
-                                }
-                            })
+                            this.state.data.stallLocation = e.target.value;
                         }
                         }/>
                     </Form.Item>
@@ -102,66 +91,12 @@ import { PlusOutlined } from '@ant-design/icons';
                             },
                         ]}>
                         <Input placeholder={'StallRent'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    stallRent: e.target.value
-                                }
-                            })
+                            this.state.data.stallRent = e.target.value;
                         }}
                         />
-                    </Form.Item>
-                    <Form.Item
-                        name="costLastMonth"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter costLastMonth!',
-                            },
-                        ]}>
-                        <Input placeholder={'CostLastMonth'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    costLastMonth: e.target.value
-                                }
-                            })
-                        }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="operationName"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter operationName!',
-                            },
-                        ]}>
-                        <Input placeholder={'OperationName'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    operationName: e.target.value
-                                }
-                            })
-                        }}/>
-                    </Form.Item>
-                    <Form.Item
-                        name="recipes"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter recipes!',
-                            },
-                        ]}>
-                        <Input placeholder={'recipes, please separate different individuals with comma!'} onChange={(e) => {
-                            this.setState({
-                                data :{
-                                    recipes: e.target.value
-                                }
-                            })
-                        }
-                        }/>
                     </Form.Item>
                         </Form>
-                    <Button onClick={()=>this.props.parent.handleDataFromDrawer(this.state.data)}>Add</Button>
+                    <Button onClick={this.handToParent}>Add</Button>
 
                 </Drawer>
         </div>

@@ -47,7 +47,9 @@ class Dialogue extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromDialogue(this.state.data)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>{
+                            this.props.parent.handleDataFromDialogue(this.state.data)
+                        }}>
                             Submit
                         </Button>,
                     ]}

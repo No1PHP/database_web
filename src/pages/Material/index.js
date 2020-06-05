@@ -9,6 +9,8 @@ import axios from "axios";
 import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
 import Link from "react-router-dom/Link";
+import OrderDrawer from "../Material/OrderDrawer";
+import UsageDrawer from "../Material/UsageDrawer";
 
 
 class Material extends Component {
@@ -16,85 +18,7 @@ class Material extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			list: [
-				{
-				name: 'egg',
-				key: '1',
-				type: 'food',
-				unitPrice: '12',
-				availableAmount: '100',
-				availablePeriod: '90 days',
-				materialOrders: '10',
-				recipes: 'egg and tomato',
-				materialUsages: 'everyday canteen',
-			},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-				{
-					name: 'egg',
-					key: '1',
-					type: 'food',
-					unitPrice: '12',
-					availableAmount: '100',
-					availablePeriod: '90 days',
-					materialOrders: '10',
-					recipes: 'egg and tomato',
-					materialUsages: 'everyday canteen',
-				},
-			],
+			list: [],
 			pageNo:'1',
 			size:'10',
 		};
@@ -131,9 +55,31 @@ class Material extends Component {
 		});
 	}
 
+	handleDataFromOrderDrawer(data) {
+		const dataList = {
+			operationType: "ORDER",
+			body: {
+				materialName : data.materialName,
+				amount: data.amount
+			}
+		};
+		this.makeOrder(dataList).catch((e)=>{
+			console.log(e)
+		});
+	}
+
+	handleDataFromUsageDrawer(data) {
+		const dataList = {
+			materialName: data.materialName,
+			stallName: data.stallName,
+			amount: data.amount
+		};
+		this.allocateTo(dataList).catch((e)=>{
+			console.log(e)
+		});
+	}
 
 	getMaterials = (pageNo,size) => {
-
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Material').then((res) => {
 			//axios.get('/api/detail.json?page='+pageNo+'&'+'size='+size).then((res) => {
 				const result = res.data.result;
@@ -146,13 +92,10 @@ class Material extends Component {
 			}).catch((e) => {
 				alert(e.message)
 			})
-
 	};
-
 
 	//删除 传入食材名字
 	deleteData (name) {
-
 		return (
 			axios.get('http://localhost:8080/delete?id='+name+'&'+'name='+'Material').then((res) => {
 					const result = res.status;
@@ -163,9 +106,6 @@ class Material extends Component {
 			})
 		)
 	}
-
-
-
 
 	updateData = (dataList) => {//传本项的datalist
 		return (
@@ -178,7 +118,6 @@ class Material extends Component {
 			})
 		)
 	}
-
 
 	addNewMaterial = (dataList) => {
 		return (
@@ -193,10 +132,33 @@ class Material extends Component {
 		)
 	}
 
+	makeOrder = (dataList) => {
+		return (
+			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
+					const result = res.status;
+					console.log((result===200)?'Item successfully added':'Added failed')
+				}
+			).catch((e)=>{
+					console.log(e)
+				}
+			)
+		)
+	}
 
+	allocateTo = (dataList) => {
+		return (
+			axios.post('http://localhost:8080/Material/allocate?allocateRequest='+JSON.stringify(dataList)).then((res) => {
+					const result = res.status;
+					console.log((result===200)?'success':'Added failed')
+				}
+			).catch((e)=>{
+					console.log(e)
+				}
+			)
+		)
+	}
 
 	renderColumn = [
-
 			{
 				title: 'Name',
 				dataIndex: 'name',
@@ -227,13 +189,7 @@ class Material extends Component {
 			   dataIndex : 'availablePeriod',
 			   key : 'availablePeriod',
 
-	   },
-		   {
-		   	   title: 'MaterialOrders',
-			   dataIndex: 'materialOrders',
-			   key : 'materialOrders',
-			   sorter: (a, b) => a.materialOrders - b.materialOrders,
-		   },
+	   		},
 		   {
 			   title: 'Recipes',
 			   dataIndex: 'recipes',
@@ -252,6 +208,8 @@ class Material extends Component {
 				<Space size="middle">
 					{/*update dialogue*/}
 					<Dialogue parent={this} record={record}/>
+					<OrderDrawer parent={this} record={record}/>
+					<UsageDrawer parent={this} record={record}/>
         　　     <a className="delete-data" onClick={(e)=>this.deleteData(record.name)}>Delete</a>
                 </Space>
 				),
@@ -263,9 +221,6 @@ class Material extends Component {
 	render() {
 		const {loginStatus, list} = this.props;
 		const style = {
-			//height: 40,
-			//width: 40,
-			//borderRadius: 4,
 			border:'right',
 			backgroundColor: '#1088e9',
 			color: '#fff',
@@ -273,14 +228,12 @@ class Material extends Component {
 			fontSize: 14,
 		};
 
-		//if(loginStatus){
 		return (
 			<Link to={'/Material'}>
 			<DetailWrapper>
 				<Header>Materials</Header>
 				<Content>
 					<MaterialDrawer parent={this}/>
-
                 <Table size="middle"
 					   columns={this.renderColumn}
 					   dataSource={this.state.list}
@@ -293,42 +246,24 @@ class Material extends Component {
 			</DetailWrapper>
 			</Link>
 		)
-	//}
-		/*else {
-			alert("please login first");
-			return <Redirect to='/login'/>
-		}*/
 	}
 
 	componentDidMount() {
 		const {accountName} = this.props;
-		//const {pageNo} = this.props;
-		//const {size} = this.props;
-		//this.props.getMaterials(pageNo, size);
 		this.getMaterials(this.state.pageNo, this.state.size);
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
 		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
+		this.handleDataFromOrderDrawer = this.handleDataFromOrderDrawer.bind(this);
+		this.handleDataFromUsageDrawer = this.handleDataFromUsageDrawer.bind(this);
 	}
 }
 
 
 
 const mapState = (state) => ({
-    //list : state.getIn(['material','list']),
-    //pageNo : state.getIn(['material','pageNo']),
-    //size : state.getIn(['material','size']),
 	loginStatus: state.getIn(['login', 'login']),
 	accountName : state.getIn(['login', 'account'])
 });
-/*
-const mapDispatch = (dispatch) => ({
-
-    getMaterials(pageNo,size) {
-        dispatch(actionCreators.getMaterials(pageNo,size));
-    }
 
 
-});
-*/
-//export default connect(mapState, mapDispatch)(withRouter(Material));
 export default connect(mapState, null)(withRouter(Material));

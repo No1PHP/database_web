@@ -3,18 +3,18 @@ import React, {useState, Component} from "react";
 import {  Drawer, Form, Button, Col, Row, Input, Select, DatePicker  } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-class OrderDrawer extends React.Component {
+class StallChangeDrawer extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
             data: {
-                materialName:'',
-                amount:''
-
+                stallName:'',
+                newLocation:''
             }
         }
+        this.handToParent = this.handToParent.bind(this);
     }
 
     setVisible = (value) => {
@@ -37,7 +37,7 @@ class OrderDrawer extends React.Component {
 
     handToParent = () => {
         const dataList = this.state.data;
-        this.props.handleDataFromOrderDrawer(dataList);
+        this.props.parent.handleDataFromStallChangeDrawer(dataList);
     }
 
 
@@ -45,10 +45,10 @@ class OrderDrawer extends React.Component {
         return (
             <div>
                 <Button type="primary" onClick={this.showDrawer} block>
-                    Order
+                    Change stall location
                 </Button>
                 <Drawer
-                    title="Order"
+                    title="Add Stall Change Records"
                     placement="right"
                     closable={false}
                     onClose={this.onClose}
@@ -56,48 +56,40 @@ class OrderDrawer extends React.Component {
                 >
                     <Form>
                         <Form.Item
-                            name="materialName"
+                            name="stallName"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter materialName!',
+                                    message: 'Please enter stallName!',
                                 },
                             ]}>
-                            <Input placeholder={'materialName'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        materialName: e.target.value
-                                    }
-                                })
+                            <Input placeholder={'stallName'} onChange={(e) => {
+                                this.state.data.stallName = e.target.value;
                             }}/>
                         </Form.Item>
 
                         <Form.Item
-                            name="amount"
+                            name="newLocation"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter amount!',
+                                    message: 'Please enter newLocation!',
                                 },
                             ]}>
-                            <Input placeholder={'amount'} onChange={(e) => {
-                                this.setState({
-                                    data :{
-                                        amount: e.target.value
-                                    }
-                                })
+                            <Input placeholder={'newLocation'} onChange={(e) => {
+                                this.state.data.newLocation = e.target.value;
                             }
                             }/>
                         </Form.Item>
 
                     </Form>
-                    <Button onClick={()=>this.handToParent.bind(this)}>Order</Button>
+                    <Button onClick={this.handToParent}>Add</Button>
 
                 </Drawer>
             </div>
         )
     }
 }
-export default OrderDrawer;
+export default StallChangeDrawer;
 
 

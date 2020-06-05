@@ -15,32 +15,10 @@ class Recipe extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			list: [
-				{
-					recipeName:'',
-					relevantIngredient:'',
-					price:'',
-					operationName:''
-				},
-				{
-					recipeName:'',
-					relevantIngredient:'',
-					price:'',
-					operationName:''
-				},
-				{
-					recipeName:'',
-					relevantIngredient:'',
-					price:'',
-					operationName:''
-				},
-
-			],
+			list: [],
 			pageNo:'1',
 			size:'10',
 		};
-		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
-		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
 	}
 
 
@@ -63,7 +41,7 @@ class Recipe extends Component {
 			recipeName: data.recipeName,
 			relevantIngredient: data.relevantIngredient,
 			price:data.price,
-			operationName : 'ModifyRecipe"'
+			operationName : 'ModifyRecipe'
 		};
 		this.updateData(dataList).catch((e)=>{
 			console.log(e)
@@ -72,7 +50,7 @@ class Recipe extends Component {
 
 
 	getRecipe = (pageNo, size) => {
-		return (
+		(
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Recipe').then((res) => {
 				const result = res.data.result;
 				this.setState(
@@ -144,11 +122,6 @@ class Recipe extends Component {
 			key: 'price',
 		},
 		{
-			title : 'OperationName',
-			dataIndex : 'operationName',
-			key: 'operationName',
-		},
-		{
 			title: 'Action',
 			key: 'action',
 			render : (text, record) => (
@@ -183,6 +156,8 @@ class Recipe extends Component {
 	componentDidMount() {
 		const {accountName} = this.props;
 		this.getRecipe(this.state.pageNo, this.state.size);
+		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
+		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);
 	}
 }
 
