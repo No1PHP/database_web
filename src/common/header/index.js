@@ -96,7 +96,7 @@ class Header extends Component {
 	}
 
 	quit = () =>{
-		axios.get('http://localhost:8080/LoginPage/logStage='+'logout').then((res)=>{
+		axios.get('http://localhost:8080/account/LoginPage/logout').then((res)=>{
 			if(res.status===200) console.log("already logout")
 			}
 		).catch(e=>console.log(e.message))
