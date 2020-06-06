@@ -40,8 +40,7 @@ class MaterialUsage extends Component {
 	deleteData = (id) => {
 		return (
 			axios.get('http://localhost:8080/delete?id='+id+'&name=MaterialUsage').then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully deleted':'delete failed')
+				this.getMaterialUsage(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)

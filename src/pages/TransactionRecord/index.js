@@ -57,8 +57,7 @@ class Transaction extends Component {
 	deleteData = (id) => {
 		return (
 			axios.get('http://localhost:8080/delete?id='+id+'&name=Transaction').then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully deleted':'delete failed')
+				this.getTransaction(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -69,8 +68,7 @@ class Transaction extends Component {
 	addNewTransaction = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Transaction/add?transactionRequest='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					alert((result===200)?'Item successfully added':'Added failed')
+				this.getTransaction(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)

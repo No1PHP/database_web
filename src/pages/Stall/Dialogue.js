@@ -49,7 +49,11 @@ class Dialogue extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromDialogue(this.state.data)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>{this.props.parent.handleDataFromDialogue(this.state.data);
+                            this.setState({
+                                visible: false,
+                            });
+                        }}>
                             Submit
                         </Button>,
                     ]}
@@ -64,8 +68,7 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="stallLocation"
                     >
-                        <Input placeholder={'StallLocation'} defaultValue={this.props.record.stallLocation} readOnly/>}
-                        />
+                        <Input placeholder={'StallLocation'} defaultValue={this.props.record.stallLocation} readOnly/>
                     </Form.Item>
 
                     <Form.Item

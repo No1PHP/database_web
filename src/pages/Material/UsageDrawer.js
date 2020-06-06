@@ -51,8 +51,9 @@ class UsageDrawer extends React.Component {
                             cancel
                         </Button>,
                         <Button key="submit" type="primary" loading={loading} onClick={()=>{
-                            this.props.parent.handleDataFromUsageDrawer(this.state.data)}
-                        }>
+                            this.props.parent.handleDataFromUsageDrawer(this.state.data);
+                            this.setState({visible:false});
+                        }}>
                             Submit
                         </Button>,
                     ]}

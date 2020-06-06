@@ -39,7 +39,6 @@ class Material extends Component {
 		this.addNewMaterial(dataList).catch((e)=>{
 			console.log(e)
 		});
-
 	}
 
 //{materialName:'',materialType:'',unitPrice:'Float',availablePeriod:'',operationName:''}
@@ -84,9 +83,6 @@ class Material extends Component {
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'Material').then((res) => {
 			//axios.get('/api/detail.json?page='+pageNo+'&'+'size='+size).then((res) => {
 				const result = res.data.result;
-				console.log(res);
-				console.log(res.data);
-				console.log(res.data.list);
 				this.setState(
 					{list : result,
 						   totalCount: res.data.totalCount
@@ -101,8 +97,7 @@ class Material extends Component {
 	deleteData (name) {
 		return (
 			axios.get('http://localhost:8080/delete?id='+name+'&'+'name='+'Material').then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+					this.getMaterials(this.state.pageNo, this.state.size);
 				}
 			).catch((e) => {
 				console.log(e)
@@ -113,8 +108,7 @@ class Material extends Component {
 	updateData = (dataList) => {//传本项的datalist
 		return (
 			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+					this.getMaterials(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e)
@@ -125,8 +119,7 @@ class Material extends Component {
 	addNewMaterial = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'Item successfully added':'Added failed')
+					this.getMaterials(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e)
@@ -151,8 +144,7 @@ class Material extends Component {
 	allocateTo = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Material/allocate?allocateRequest='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'success':'Added failed')
+					this.getMaterials(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 					console.log(e)

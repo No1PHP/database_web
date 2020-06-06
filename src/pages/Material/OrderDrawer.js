@@ -50,8 +50,9 @@ class OrderDrawer extends React.Component {
                             cancel
                         </Button>,
                         <Button key="submit" type="primary" loading={loading} onClick={()=>{
-                            this.props.parent.handleDataFromOrderDrawer(this.state.data)}
-                        }>
+                            this.props.parent.handleDataFromOrderDrawer(this.state.data);
+                            this.setState({visible:false});
+                        }}>
                             Submit
                         </Button>,
                     ]}

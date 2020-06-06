@@ -38,6 +38,7 @@ class StallChangeDrawer extends React.Component {
     handToParent = () => {
         const dataList = this.state.data;
         this.props.parent.handleDataFromStallChangeDrawer(dataList);
+        this.setVisible(false);
     }
 
 

@@ -92,8 +92,7 @@ class Staff extends Component {
 	deleteData = (staffID) => {
 		return (
 			axios.get('http://localhost:8080/delete?'+'id='+staffID+'&'+'name=Staff').then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully deleted':'delete failed')
+				this.getStaff(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -104,8 +103,7 @@ class Staff extends Component {
 	updateData = (dataList) => {//传本项的datalist
 		return (
 			axios.post('http://localhost:8080/Staff/operate?staffRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					alert((result===200)?'Item successfully changed':'change failed')
+				this.getStaff(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -117,8 +115,7 @@ class Staff extends Component {
 	addNewStaff = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Staff/operate?staffRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					alert((result===200)?'Item successfully added':'Added failed')
+				this.getStaff(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
