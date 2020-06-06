@@ -27,8 +27,6 @@ class Header extends Component {
 			loginStatus:false,
 		}
 	}
-
-
 	menu = (
 		<Menu>
 			<Menu.Item>
@@ -97,7 +95,8 @@ class Header extends Component {
 
 	quit = () =>{
 		axios.get('http://localhost:8080/account/LoginPage/logout').then((res)=>{
-			if(res.status===200) console.log("already logout")
+			if(res.status===200) console.log("already logout");
+			this.getAccountInfo();
 			}
 		).catch(e=>console.log(e.message))
 	}
@@ -117,7 +116,6 @@ class Header extends Component {
 				</Dropdown>
 				</MenuWrapper>
 				<Nav>
-
 					{
 						this.state.loginStatus ?
 							<div>
@@ -128,11 +126,9 @@ class Header extends Component {
 									this.quit();
 								}} className='right'>logout</NavItem>
 							</div> :
-							<Link to='/login'><NavItem className='right'>login</NavItem></Link>
+							<Link to='/Login'><NavItem className='right'>login</NavItem></Link>
 					}
-
 				</Nav>
-
 			</HeaderWrapper>
 		);
 	}
