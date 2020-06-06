@@ -15,6 +15,7 @@ import { Avatar } from 'antd';
 import axios from "axios"
 import { UserOutlined, AuditOutlined } from '@ant-design/icons';
 import {logout} from "../../pages/login/store/actionCreators";
+import Redirect from "react-router/Redirect";
 
 
 class Header extends Component {
@@ -97,13 +98,21 @@ class Header extends Component {
 
 	quit = () =>{
 		axios.get('http://localhost:8080/account/LoginPage/logout').then((res)=>{
-			if(res.status===200) console.log("already logout")
+			if(res.status===200) {
+				console.log("already logout")
+				this.setState(
+					{
+						account:'',
+						loginStatus:false,
+					}
+				)
+			}
 			}
 		).catch(e=>console.log(e.message))
 	}
 
 	render() {
-
+		this.getAccountInfo().then();
 		return (
 			<HeaderWrapper>
 				<Link to='/Login'>
@@ -128,7 +137,7 @@ class Header extends Component {
 									this.quit();
 								}} className='right'>logout</NavItem>
 							</div> :
-							<Link to='/login'><NavItem className='right'>login</NavItem></Link>
+							<Link to='/Login'><NavItem className='right'>login</NavItem></Link>
 					}
 
 				</Nav>
@@ -138,30 +147,9 @@ class Header extends Component {
 	}
 
 	componentDidMount() {
-		this.getAccountInfo().then();
+
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		focused: state.getIn(['header', 'focused']),
-		login: state.getIn(['login', 'login']),
-		accountName : state.getIn(['login', 'account'])
-	}
-}
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		handleMouseEnter() {
-			dispatch(actionCreators.mouseEnter());
-		},
-		handleMouseLeave() {
-			dispatch(actionCreators.mouseLeave());
-		},
-		logout() {
-			dispatch(loginActionCreators.logout())
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default (Header);

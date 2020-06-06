@@ -25,6 +25,7 @@ class OperationRecord extends Component {
 		return (
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page='+'OperationRecord').then((res) => {
 				const result = res.data.result;
+				console.log(res.data);
 				this.setState(
 					{
 						list : result,

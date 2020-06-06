@@ -1,15 +1,40 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { LoginWrapper, LoginBox, Input, ButtonWrapper, ButtonWrapper2 } from './style';
 import { actionCreators } from './store';
-class Login extends PureComponent {
+import axios from "axios";
+
+
+class Login extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state={
+			account:'',
+			loginStatus:false,
+		}
+	}
+
+	getAccountInfo = () =>{
+		return (
+			axios.get('http://localhost:8080/account/info').then((res) => {
+					const user = res.data.username;
+					const login = res.data.login;
+					this.setState({
+						account:user,
+						loginStatus:login
+					})
+				}
+			).catch((e)=>{
+				console.log(e)
+			})
+		)
+	}
+
 	render() {
-		const { loginStatus } = this.props;
-		const { account } = this.props;
-		if (!loginStatus) {
-			console.log(loginStatus);
-			console.log(account);
+		if (!(this.state.loginStatus)) {
+
 			return (
 				<LoginWrapper>
 					<LoginBox>
@@ -17,7 +42,7 @@ class Login extends PureComponent {
 						<Input placeholder='Password' type='password' innerRef={(input) => {this.password = input}}/>
 
 						<ButtonWrapper onClick={() => this.props.login(this.account, this.password)}>LOGIN</ButtonWrapper>
-						<ButtonWrapper2><a href = {"./passwordChanging"}>ChangePassword</a></ButtonWrapper2>
+						<ButtonWrapper2><a href = {"/passwordChanging"}>ChangePassword</a></ButtonWrapper2>
 
 					</LoginBox>
 				</LoginWrapper>
@@ -25,6 +50,9 @@ class Login extends PureComponent {
 		}else {
 			return <Redirect to='/'/>
 		}
+	}
+	componentDidMount() {
+		//this.getAccountInfo().then();
 	}
 }
 

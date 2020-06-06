@@ -11,6 +11,7 @@ import Dialogue from "./Dialogue";
 import Link from "react-router-dom/Link";
 import OrderDrawer from "../Material/OrderDrawer";
 import UsageDrawer from "../Material/UsageDrawer";
+import {NavItem} from "../../common/header/style";
 
 
 class Material extends Component {
@@ -26,7 +27,21 @@ class Material extends Component {
 			loginStatus:''
 		};
 	}
-
+	getAccountInfo = () =>{
+		return (
+			axios.get('http://localhost:8080/account/info').then((res) => {
+					const user = res.data.username;
+					const login = res.data.login;
+					this.setState({
+						account:user,
+						loginStatus:login
+					})
+				}
+			).catch((e)=>{
+				console.log(e)
+			})
+		)
+	}
 
     handleDataFromDrawer(data){
 		const dataList = {
@@ -229,8 +244,7 @@ class Material extends Component {
 
 
 	render() {
-		const {loginStatus} = this.state.loginStatus;
-		const {username} = this.state.account;
+
 		const style = {
 			border:'right',
 			backgroundColor: '#1088e9',
@@ -256,7 +270,7 @@ class Material extends Component {
 		}
 
 		return (
-			<Link to={'/Material'}>
+			//(this.state.loginStatus)?
 			<DetailWrapper>
 				<Header>Materials</Header>
 				<Content>
@@ -273,12 +287,15 @@ class Material extends Component {
 				</Content>
 
 			</DetailWrapper>
-			</Link>
+
+		//<Redirect to='/Login'><NavItem className='right'>login</NavItem></Redirect>
+
 		)
 	}
 
 	componentDidMount() {
 		const {accountName} = this.props;
+		this.getAccountInfo().then();
 
 		this.getMaterials(this.state.pageNo, this.state.size);
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
