@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
 import { actionCreators } from './store';
 import {Table, Tag, Space, Button, Drawer, Input, BackTop} from 'antd';
@@ -9,6 +9,7 @@ import axios from "axios";
 import MaterialDrawer from "./drawer";
 import Dialogue from "./Dialogue";
 import DayShiftDrawer from "../Staffinfo/DayShiftDrawer";
+import {NavItem} from "../../common/header/style";
 
 
 class Staff extends Component {
@@ -187,6 +188,7 @@ class Staff extends Component {
 
 
 	render() {
+		const isLogin = localStorage.getItem("loginNow")==="login";
 		const paginationProps={
 			size:"small" ,
 			total: this.state.totalCount,
@@ -211,6 +213,7 @@ class Staff extends Component {
 		};
 
 		return (
+			(isLogin)?
 			<DetailWrapper>
 				<Header>Staff</Header>
 				<Content>
@@ -226,7 +229,11 @@ class Staff extends Component {
 						<div style={style}>UP TO TOP</div>
 					</BackTop>
 				</Content>
-			</DetailWrapper>
+			</DetailWrapper>:
+				<Redirect to='/Login'>
+					{alert("please login first!")}
+					<NavItem className='right'>login</NavItem>
+				</Redirect>
 		)
 	}
 

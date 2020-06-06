@@ -30,6 +30,15 @@ class Header extends Component {
 	}
 
 
+	tick(){
+		const isLogin = localStorage.getItem("loginNow")==="login";
+		const username = localStorage.getItem("account");
+		this.setState({
+			account: username,
+			loginStatus: isLogin,
+		})
+	}
+
 	menu = (
 		<Menu>
 			<Menu.Item>
@@ -99,7 +108,9 @@ class Header extends Component {
 	quit = () =>{
 		axios.get('http://localhost:8080/account/LoginPage/logout').then((res)=>{
 			if(res.status===200) {
-				console.log("already logout")
+				console.log("already logout");
+				localStorage.setItem("loginNow","logout");
+				localStorage.setItem("account","");
 				this.setState(
 					{
 						account:'',
@@ -112,7 +123,7 @@ class Header extends Component {
 	}
 
 	render() {
-		this.getAccountInfo().then();
+
 		return (
 			<HeaderWrapper>
 				<Link to='/Login'>
@@ -128,7 +139,7 @@ class Header extends Component {
 				<Nav>
 
 					{
-						this.state.loginStatus ?
+						localStorage.getItem("loginNow")==="login" ?
 							<div>
 								<UsernameWrapper><h3><Avatar shape="square" icon={<UserOutlined />} />
 									{this.state.account}</h3></UsernameWrapper>
@@ -147,7 +158,15 @@ class Header extends Component {
 	}
 
 	componentDidMount() {
+		this.timerID = setInterval(
+			() => this.tick(),
+			100
+		);
+		this.getAccountInfo();
+	}
 
+	componentWillUnmount() {
+		clearInterval(this.timerID);
 	}
 }
 

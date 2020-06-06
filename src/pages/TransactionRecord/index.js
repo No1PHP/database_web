@@ -1,12 +1,13 @@
 import React, {Component, useState} from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
 import { actionCreators } from './store';
 import {Table, Tag, Space, Button, Drawer, Input, BackTop} from 'antd';
 import { getIn } from 'immutable';
 import axios from "axios";
 import MaterialDrawer from "./drawer";
+import {NavItem} from "../../common/header/style";
 
 
 class Transaction extends Component {
@@ -135,6 +136,7 @@ class Transaction extends Component {
 
 
 	render() {
+		const isLogin = localStorage.getItem("loginNow")==="login";
 		const paginationProps={
 			size:"small" ,
 			total: this.state.totalCount,
@@ -158,6 +160,7 @@ class Transaction extends Component {
 			fontSize: 14,
 		};
 		return (
+			(isLogin)?
 			<DetailWrapper>
 				<Header>Transaction</Header>
 				<Content>
@@ -171,10 +174,14 @@ class Transaction extends Component {
 
 					/>
 					<BackTop>
-						<div style={style}>UP TO TOP</div>
+						<div style={style}> UP </div>
 					</BackTop>
 				</Content>
-			</DetailWrapper>
+			</DetailWrapper>:
+				<Redirect to='/Login'>
+					{alert("please login first!")}
+					<NavItem className='right'>login</NavItem>
+				</Redirect>
 		)
 	}
 

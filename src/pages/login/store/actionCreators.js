@@ -1,6 +1,9 @@
 import axios from 'axios';
 import * as constants from './constants';
 import {LOG_STATUS} from "../../../common/LOG_STATUS";
+import LoginDialogue from "../LoginDialogue";
+import React from "react";
+import FailingDialogue from "../FailingDialogue";
 
 const changeLogin = (account) => ({
 	type: constants.CHANGE_LOGIN,
@@ -35,6 +38,8 @@ export const login = (account, password) => {
 }
 */
 
+
+
 export const login = (account, password) => {
 	const data = {
 		"account": account,
@@ -48,9 +53,11 @@ export const login = (account, password) => {
 			console.log("res:"+JSON.stringify(res));
 			console.log("res.data:"+JSON.stringify(res.data));
 			if (res.status===200) {
-				dispatch(changeLogin(account))
+				dispatch(changeLogin(account));
+				localStorage.setItem("loginNow","login");
+				localStorage.setItem("account",account);
 			}else {
-				alert('登陆失败')
+				console.log()
 			}
 		}).catch(e=>{
 			console.log(e.message)

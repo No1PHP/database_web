@@ -14,15 +14,44 @@ import Transaction from "./pages/TransactionRecord";
 import ScheduleRecord from "./pages/ScheduleRecord";
 import MaterialOrder from "./pages/MaterialOrder";
 import MaterialUsage from "./pages/MaterialUsage";
-
+import axios from "axios";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state={
+            account:'',
+            loginStatus:false,
+        }
+    }
+
+    onRef = (ref) =>{
+        this.child = ref;
+    }
+
+    getAccountInfo = () =>{
+        return (
+            axios.get('http://localhost:8080/account/info').then((res) => {
+                    const user = res.data.username;
+                    const login = res.data.login;
+                    this.setState({
+                        account:user,
+                        loginStatus:login
+                    })
+                }
+            ).catch((e)=>{
+                console.log(e)
+            })
+        )
+    }
+
   render() {
     return (
     	<Provider store={store}>
       	<BrowserRouter>
       		<div>
-            <Header />
+            <Header key={Math.random()}/>
 
                 <Route path='/Login' exact component={Login}></Route>
                 <Route path='/Material' exact component={Material}></Route>
@@ -39,6 +68,9 @@ class App extends Component {
       	</BrowserRouter>
       </Provider>
     );
+
+  }
+  componentWillMount() {
   }
 }
 

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { LoginWrapper, LoginBox, Input, ButtonWrapper, ButtonWrapper2 } from './style';
 import { actionCreators } from './store';
 import axios from "axios";
+import LoginDialogue from "./LoginDialogue";
+import FailingDialogue from "./FailingDialogue";
 
 
 class Login extends Component {
@@ -14,6 +16,28 @@ class Login extends Component {
 			account:'',
 			loginStatus:false,
 		}
+	}
+
+	log(account, password){
+		const data = {
+			"account": account,
+			"password": password
+		};
+		axios.post('http://localhost:8080/account/loginPage?accountString='+ JSON.stringify(data)).then((res) => {
+			return res.status === 200;
+		}).catch()
+	}
+
+	showSuccessDialogue = () =>{
+		return(
+			<LoginDialogue/>
+		);
+	}
+
+	showFailedDialogue = () =>{
+		return(
+			<FailingDialogue/>
+		);
 	}
 
 	getAccountInfo = () =>{
@@ -32,8 +56,18 @@ class Login extends Component {
 		)
 	}
 
+	onRef=(ref)=>{
+		this.child = ref;
+	}
+
+	handleSubmit(e){
+		this.props.login(this.account, this.password);
+		console.log("the login status is"+localStorage.getItem("loginNow"))
+	}
+
+
 	render() {
-		if (!(this.state.loginStatus)) {
+		if (!(this.props.loginStatus)) {
 
 			return (
 				<LoginWrapper>
@@ -41,9 +75,8 @@ class Login extends Component {
 						<Input placeholder='Account' innerRef={(input) => {this.account = input}}/>
 						<Input placeholder='Password' type='password' innerRef={(input) => {this.password = input}}/>
 
-						<ButtonWrapper onClick={() => this.props.login(this.account, this.password)}>LOGIN</ButtonWrapper>
+						<ButtonWrapper onClick={(e) => this.handleSubmit(e)}>LOGIN</ButtonWrapper>
 						<ButtonWrapper2><a href = {"/passwordChanging"}>ChangePassword</a></ButtonWrapper2>
-
 					</LoginBox>
 				</LoginWrapper>
 			)

@@ -34,7 +34,7 @@ export const UsernameWrapper = styled.div`
 
 	position: absolute;
 	top: 13px;
-	left: 740px;
+	right: 300px;
 	display: block;
 	width: 100px;
 	height: 56px;

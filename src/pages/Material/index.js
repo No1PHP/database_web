@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Redirect, withRouter} from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
 import { actionCreators } from './store';
-import {Table, Tag, Space, Button, Drawer, Input, BackTop} from 'antd';
+import {Table, Tag, Space, Button, Drawer, Input, BackTop, Alert} from 'antd';
 import { getIn } from 'immutable';
 import axios from "axios";
 import MaterialDrawer from "./drawer";
@@ -245,6 +245,7 @@ class Material extends Component {
 
 	render() {
 
+		const isLogin = localStorage.getItem("loginNow")==="login";
 		const style = {
 			border:'right',
 			backgroundColor: '#1088e9',
@@ -269,8 +270,9 @@ class Material extends Component {
 			},
 		}
 
+
 		return (
-			//(this.state.loginStatus)?
+			(isLogin)?
 			<DetailWrapper>
 				<Header>Materials</Header>
 				<Content>
@@ -282,14 +284,15 @@ class Material extends Component {
 					   pagination={paginationProps}
 				/>
 					<BackTop>
-						<div style={style}>UP TO TOP</div>
+						<div style={style}> UP </div>
 					</BackTop>
 				</Content>
 
-			</DetailWrapper>
-
-		//<Redirect to='/Login'><NavItem className='right'>login</NavItem></Redirect>
-
+			</DetailWrapper>:
+				<Redirect to='/Login'>
+					{alert("please login first!")}
+					<NavItem className='right'>login</NavItem>
+				</Redirect>
 		)
 	}
 

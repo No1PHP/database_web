@@ -85,7 +85,9 @@ const changeLogStatus = (state,action) => {
 export default (state = defaultState, action) => {
 	switch(action.type) {
 		case constants.CHANGE_LOGIN:
+		{
 			return changeLogStatus(state,action);
+		}
 		case constants.LOGOUT:
 			return state.set('login', action.value);
 		default:
