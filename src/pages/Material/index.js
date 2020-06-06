@@ -21,9 +21,11 @@ class Material extends Component {
 			list: [],
 			pageNo:'1',
 			size:'10',
+			totalCount:'10',
+			account:'',
+			loginStatus:''
 		};
 	}
-
 
 
     handleDataFromDrawer(data){
@@ -39,7 +41,6 @@ class Material extends Component {
 		});
 
 	}
-
 
 //{materialName:'',materialType:'',unitPrice:'Float',availablePeriod:'',operationName:''}
 	handleDataFromDialogue(data){
@@ -87,7 +88,9 @@ class Material extends Component {
 				console.log(res.data);
 				console.log(res.data.list);
 				this.setState(
-					{list : result}
+					{list : result,
+						   totalCount: res.data.totalCount
+					}
 				)
 			}).catch((e) => {
 				alert(e.message)
@@ -158,6 +161,21 @@ class Material extends Component {
 		)
 	}
 
+
+
+	//下：table翻页相关 function
+
+	toSelectedPage(selectedPage,pageSize) {
+		this.setState(
+			{
+				pageNo: selectedPage,
+				pageSize: pageSize
+			}
+		);
+		this.getMaterials(selectedPage,pageSize);
+	}
+
+
 	renderColumn = [
 			{
 				title: 'Name',
@@ -219,7 +237,8 @@ class Material extends Component {
 
 
 	render() {
-		const {loginStatus, list} = this.props;
+		const {loginStatus} = this.state.loginStatus;
+		const {username} = this.state.account;
 		const style = {
 			border:'right',
 			backgroundColor: '#1088e9',
@@ -227,6 +246,22 @@ class Material extends Component {
 			textAlign: 'center',
 			fontSize: 14,
 		};
+
+		const paginationProps={
+			size:"small" ,
+			total: this.state.totalCount,
+			showSizeChanger :true,
+			pageSizeOptions:['10', '20', '50', '100','200'],
+			showTotal: (pageSize)=> {
+				return 'total: ' + pageSize + ' items';
+			},
+			onChange:(current,pageSize)=> {  //改变页数
+				this.toSelectedPage(current,pageSize)
+			},
+			onShowSizeChange: (current, pageSize) =>{  //改变尺寸
+				this.toSelectedPage(current, pageSize);
+			},
+		}
 
 		return (
 			<Link to={'/Material'}>
@@ -237,9 +272,11 @@ class Material extends Component {
                 <Table size="middle"
 					   columns={this.renderColumn}
 					   dataSource={this.state.list}
+					   current={this.state.pageNo}
+					   pagination={paginationProps}
 				/>
 					<BackTop>
-						<div style={style}>UP</div>
+						<div style={style}>UP TO TOP</div>
 					</BackTop>
 				</Content>
 
@@ -250,6 +287,7 @@ class Material extends Component {
 
 	componentDidMount() {
 		const {accountName} = this.props;
+
 		this.getMaterials(this.state.pageNo, this.state.size);
 		this.handleDataFromDrawer = this.handleDataFromDrawer.bind(this);
 		this.handleDataFromDialogue = this.handleDataFromDialogue.bind(this);

@@ -20,45 +20,6 @@ class passwordChanging extends PureComponent {
         }
     }
 
-
-
-    // handleSubmit(account, password, newPassword, newPasswordAgain) {
-    //     //先用账户名和密码登录校验，是否存在或正确
-    //
-    //     login(account,password).then(
-    //         // res => {
-    //         //     if(res.status === 200){
-    //         //         if (this.newPassword === this.newPasswordAgain) {
-    //         //             this.props.passwordChanging(this.password, this.newPassword, this.newPasswordAgain);
-    //         //         }else{
-    //         //             alert('新密码前后输入不一致!')
-    //         //         }
-    //         //     } else{
-    //         //         alert('用户名密码不正确!')
-    //         //     }
-    //         // }
-    //         res=>{
-    //             console.log(res)
-    //         }
-    //     )
-    //
-    //     // let res = this.props.login(this.account, this.password);
-    //     // login(this.account, this.password)
-    //     // if (res) {
-    //     //     if (this.newPassword === this.newPasswordAgain) {
-    //     //         this.props.passwordChanging(this.password, this.newPassword, this.newPasswordAgain);
-    //     //         //修改成功，下可加跳转等操作
-    //     //         //
-    //     //     } else {
-    //     //         alert('新密码前后输入不一致!')
-    //     //     }
-    //     // } else {
-    //     //     alert('用户名密码不正确!')
-    //     // }
-    //
-    //
-    // }
-
     changePassword = () =>{
         const data={
             account:this.state.account,

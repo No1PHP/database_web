@@ -23,7 +23,8 @@ class App extends Component {
       	<BrowserRouter>
       		<div>
             <Header />
-                <Route path='/' exact component={Login}></Route>
+
+                <Route path='/Login' exact component={Login}></Route>
                 <Route path='/Material' exact component={Material}></Route>
                 <Route path='/passwordChanging' exact component={passwordChanging}></Route>
                 <Route path='/OperationRecord' exact component={OperationRecord}></Route>

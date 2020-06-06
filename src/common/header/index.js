@@ -14,9 +14,20 @@ import { DownOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import axios from "axios"
 import { UserOutlined, AuditOutlined } from '@ant-design/icons';
+import {logout} from "../../pages/login/store/actionCreators";
 
 
 class Header extends Component {
+
+
+	constructor(props) {
+		super(props);
+		this.state={
+			account:'',
+			loginStatus:false,
+		}
+	}
+
 
 	menu = (
 		<Menu>
@@ -68,6 +79,21 @@ class Header extends Component {
 		</Menu>
 	);
 
+	getAccountInfo = () =>{
+		return (
+			axios.get('http://localhost:8080/account/info').then((res) => {
+					const user = res.data.username;
+					const login = res.data.login;
+					this.setState({
+						account:user,
+						loginStatus:login
+					})
+				}
+			).catch((e)=>{
+				console.log(e)
+			})
+		)
+	}
 
 	quit = () =>{
 		axios.get('http://localhost:8080/LoginPage/logStage='+'logout').then((res)=>{
@@ -77,11 +103,10 @@ class Header extends Component {
 	}
 
 	render() {
-		const { login, logout } = this.props;
-		const { accountName } = this.props;
+
 		return (
 			<HeaderWrapper>
-				<Link to='/'>
+				<Link to='/Login'>
 					<Logo/>
 				</Link>
 				<MenuWrapper>
@@ -94,10 +119,10 @@ class Header extends Component {
 				<Nav>
 
 					{
-						login ?
+						this.state.loginStatus ?
 							<div>
 								<UsernameWrapper><h3><Avatar shape="square" icon={<UserOutlined />} />
-									{accountName}</h3></UsernameWrapper>
+									{this.state.account}</h3></UsernameWrapper>
 								<NavItem onClick={(e)=>{
 									logout();
 									this.quit();
@@ -110,6 +135,10 @@ class Header extends Component {
 
 			</HeaderWrapper>
 		);
+	}
+
+	componentDidMount() {
+		this.getAccountInfo().then();
 	}
 }
 

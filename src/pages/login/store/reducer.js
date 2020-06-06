@@ -1,10 +1,13 @@
 import { fromJS } from 'immutable';
 import * as constants from './constants';
-import { createStore } from 'redux'
-import {persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import {PersistGate} from 'redux-persist/integration/react';
-import {LOG_STATUS} from "../../../common/LOG_STATUS";
+
+import Thunk from 'redux-thunk';
+import asyncSessionStorage from "redux-persist/lib/storage"
+import {applyMiddleware, compose} from "redux";
+const { browserHistory } = require('react-router');
+const { syncHistoryWithStore, routerReducer } = require('react-router-redux');
+const { createStore, combineReducers } = require('redux');
+
 /*
 const defaultState = fromJS({
 	login: false,
@@ -25,9 +28,46 @@ export default (state = defaultState, action) => {
 			return state;
 	}
 }
-*
- */
 
+const { persistStore, autoRehydrate } = require('redux-persist');
+const defaultState = fromJS({
+	login: false,
+	account: ''
+});
+const { login,account } = require('./reducer');
+const reducer = combineReducers({
+	login,
+	account,
+	routing: routerReducer
+})
+const store = createStore(
+	reducer,
+	defaultState,
+	autoRehydrate(),
+);
+persistStore(
+	store,
+	{
+		storage: asyncSessionStorage,
+
+	},
+);
+const history = syncHistoryWithStore(browserHistory, store);
+module.exports = {
+	store,
+	history,
+};
+
+
+
+const persistConfig = {
+	key: 'root',
+	storage: storage,
+};
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = compose(persistedReducer, {}, composeEnhancers(applyMiddleware(Thunk)));
+*/
 const defaultState = fromJS({
 	login: false,
 	account: ''
@@ -36,8 +76,8 @@ const defaultState = fromJS({
 const changeLogStatus = (state,action) => {
 	return state.merge({
 		//'login': fromJS(createStore(action.value,[ 'Use Redux' ])),
-		'login': fromJS(action.value),
-		'account': fromJS(action.account),
+		login: fromJS(action.value),
+		account: fromJS(action.account),
 	});
 }
 

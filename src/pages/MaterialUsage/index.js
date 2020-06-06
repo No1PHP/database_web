@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DetailWrapper, Header, Content } from './style';
 import { actionCreators } from './store';
-import {Table, Tag, Space, Button, Drawer, Input} from 'antd';
+import {Table, Tag, Space, Button, Drawer, Input, BackTop} from 'antd';
 import { getIn } from 'immutable';
 import axios from "axios";
 
@@ -16,6 +16,7 @@ class MaterialUsage extends Component {
 			list: [],
 			pageNo:'1',
 			size:'10',
+			totalCount:'10'
 		};
 	}
 
@@ -24,7 +25,10 @@ class MaterialUsage extends Component {
 			axios.get('http://localhost:8080/findAll?'+'pageNo='+pageNo+'&'+'size='+size+'&'+'page=MaterialUsage').then((res) => {
 				const result = res.data.result;
 				this.setState(
-					{list : result}
+					{
+						list : result,
+						totalCount: res.data.totalCount
+					}
 				)
 			}).catch((e) => {
 				console.log(e)
@@ -90,8 +94,41 @@ class MaterialUsage extends Component {
 		},
 	];
 
-	render() {
 
+	toSelectedPage(selectedPage,pageSize) {
+		this.setState(
+			{
+				pageNo: selectedPage,
+				pageSize: pageSize
+			}
+		);
+		this.getMaterialUsage(selectedPage,pageSize);
+	}
+
+
+	render() {
+		const paginationProps={
+			size:"small" ,
+			total: this.state.totalCount,
+			showSizeChanger :true,
+			pageSizeOptions:['10', '20', '50', '100','200'],
+			showTotal: (pageSize)=> {
+				return 'total: ' + pageSize + ' items';
+			},
+			onChange:(current,pageSize)=> {  //改变页数
+				this.toSelectedPage(current,pageSize)
+			},
+			onShowSizeChange: (current, pageSize) =>{  //改变尺寸
+				this.toSelectedPage(current, pageSize);
+			},
+		}
+		const style = {
+			border:'right',
+			backgroundColor: '#1088e9',
+			color: '#fff',
+			textAlign: 'center',
+			fontSize: 14,
+		};
 		return (
 			<DetailWrapper>
 				<Header>MaterialUsages</Header>
@@ -99,8 +136,13 @@ class MaterialUsage extends Component {
 					<Table size="middle"
 						   columns={this.renderColumn}
 						   dataSource={this.state.list}
+						   current={this.state.pageNo}
+						   pagination={paginationProps}
 					/>
 				</Content>
+				<BackTop>
+					<div style={style}>UP TO TOP</div>
+				</BackTop>
 			</DetailWrapper>
 		)
 	}
