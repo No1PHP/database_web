@@ -48,7 +48,7 @@ class Login extends Component {
 				</LoginWrapper>
 			)
 		}else {
-			return <Redirect to='/'/>
+			return <Redirect to='/Material'/>
 		}
 	}
 	componentDidMount() {
