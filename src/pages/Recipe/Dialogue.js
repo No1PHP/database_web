@@ -49,6 +49,9 @@ class Dialogue extends React.Component {
                         </Button>,
                         <Button key="submit" type="primary" loading={loading} onClick={()=>{
                             this.props.parent.handleDataFromDialogue(this.state.data)
+                            this.setState({
+                                visible: false,
+                            });
                         }}>
                             Submit
                         </Button>,

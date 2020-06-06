@@ -40,6 +40,7 @@ import { PlusOutlined } from '@ant-design/icons';
         handToParent = (e) => {
             const dataList = this.state.data;
             this.props.parent.handleDataFromDrawer(dataList);
+            this.setVisible(false);
         }
 
 

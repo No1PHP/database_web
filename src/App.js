@@ -23,17 +23,18 @@ class App extends Component {
       	<BrowserRouter>
       		<div>
             <Header />
-                <Route path='/' exact component={Login}></Route>
-                <Route path='/Material' exact component={Material}></Route>
-                <Route path='/passwordChanging' exact component={passwordChanging}></Route>
-                <Route path='/OperationRecord' exact component={OperationRecord}></Route>
-                <Route path='/Staff' exact component={Staff}></Route>
-                <Route path='/Stall' exact component={Stall}></Route>
-                <Route path='/Recipe' exact component={Recipe}></Route>
-                <Route path='/Transaction' exact component={Transaction}></Route>
-                <Route path='/ScheduleRecord' exact component={ScheduleRecord}></Route>
-                <Route path='/MaterialOrder' exact component={MaterialOrder}></Route>
-                <Route path='/MaterialUsage' exact component={MaterialUsage}></Route>
+                <Route path='/' exact component={Login}/>
+                <Route path='/Login' exact component={Login}/>
+                <Route path='/Material' exact component={Material}/>
+                <Route path='/passwordChanging' exact component={passwordChanging}/>
+                <Route path='/OperationRecord' exact component={OperationRecord}/>
+                <Route path='/Staff' exact component={Staff}/>
+                <Route path='/Stall' exact component={Stall}/>
+                <Route path='/Recipe' exact component={Recipe}/>
+                <Route path='/Transaction' exact component={Transaction}/>
+                <Route path='/ScheduleRecord' exact component={ScheduleRecord}/>
+                <Route path='/MaterialOrder' exact component={MaterialOrder}/>
+                <Route path='/MaterialUsage' exact component={MaterialUsage}/>
             </div>
       	</BrowserRouter>
       </Provider>

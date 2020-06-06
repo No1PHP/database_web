@@ -35,8 +35,7 @@ class MaterialOrder extends Component {
 	deleteData = (name) => {
 		return (
 			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=MaterialOrder').then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+				this.getOperation(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -53,8 +52,7 @@ class MaterialOrder extends Component {
 		};
 		return (
 			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+				this.getOperation(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -119,7 +117,7 @@ class MaterialOrder extends Component {
 		const {accountName} = this.props;
 		const {pageNo} = this.props;
 		const {size} = this.props;
-		this.getOperation(this.state.pageNo, this.state.size);;
+		this.getOperation(this.state.pageNo, this.state.size);
 	}
 }
 

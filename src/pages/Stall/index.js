@@ -101,13 +101,10 @@ class Stall extends Component {
 		)
 	};
 
-
-	//删除 传入食材名字
 	deleteData = (name) => {
 		return (
 			axios.get('http://localhost:8080/delete?'+'id='+name+'&'+'name=Stall').then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -118,8 +115,7 @@ class Stall extends Component {
 	deleteRecipeForStall = (requestJson) =>{
 		return(
 			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(requestJson)).then((res)=>{
-					const result = res.status;
-					alert((result===200)?'succeed':'delete failed');
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 
 			).catch(e=>{
@@ -131,8 +127,7 @@ class Stall extends Component {
 	addRecipeForStall = (requestJson) =>{
 		return(
 			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(requestJson)).then((res)=>{
-					const result = res.status;
-					alert((result===200)?'succeed':'add failed');
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 
 			).catch(e=>{
@@ -144,8 +139,7 @@ class Stall extends Component {
 	updateData = (dataList) => {//传本项的datalist
 		return (
 			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e)
@@ -157,8 +151,7 @@ class Stall extends Component {
 	addNewStall = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===400)?'Item successfully added':'Added failed')
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -169,8 +162,7 @@ class Stall extends Component {
 	changeLocation = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'Item successfully changed':'failed')
+				this.getStall(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -206,6 +198,11 @@ class Stall extends Component {
 			title : '30 day sales',
 			dataIndex : 'totalSales',
 			key: 'totalSales',
+		},
+		{
+			title : '30 day profits',
+			dataIndex : 'profit',
+			key: 'profit',
 		},
 		{
 			title: 'Recipes',   //TODO:删除菜谱

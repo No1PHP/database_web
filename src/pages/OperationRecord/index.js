@@ -37,8 +37,7 @@ class OperationRecord extends Component {
 	deleteData = (name) => {
 		return (
 			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=OperationRecord').then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+				this.getOperation(this.state.pageNo, this.state.size);;
 				}
 			).catch((e)=>{
 				console.log(e.message)

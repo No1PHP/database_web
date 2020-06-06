@@ -66,8 +66,7 @@ class Recipe extends Component {
 	deleteData = (name) => {
 		return (
 			axios.get('http://localhost:8080/delete?id='+name+'&'+'name=Recipe').then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+				this.getRecipe(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -80,8 +79,7 @@ class Recipe extends Component {
 	updateData = (dataList) => {//传本项的datalist
 		return (
 			axios.post('http://localhost:8080/Recipe/modify?recipeRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'item successfully changed':'change failed')
+				this.getRecipe(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -94,8 +92,7 @@ class Recipe extends Component {
 	addNewRecipe = (dataList) => {
 		return (
 			axios.post('http://localhost:8080/Recipe/modify?recipeRequestString='+JSON.stringify(dataList)).then((res) => {
-					const result = res.status;
-					console.log((result===200)?'Item successfully added':'Added failed')
+				this.getRecipe(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -115,6 +112,11 @@ class Recipe extends Component {
 			title: 'RelevantIngredient',
 			dataIndex: 'relevantIngredient',
 			key: 'relevantIngredient',
+		},
+		{
+			title: 'Providing by',
+			dataIndex: 'stalls',
+			key: 'stalls',
 		},
 		{
 			title: 'Price',

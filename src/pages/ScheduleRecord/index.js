@@ -37,8 +37,7 @@ class ScheduleRecord extends Component {
 	deleteData = (name) => {
 		return (
 			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=ScheduleRecord').then((res) => {
-					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+					this.getScheduleRecord(this.state.pageNo, this.state.size);
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -99,7 +98,7 @@ class ScheduleRecord extends Component {
 		const {accountName} = this.props;
 		const {pageNo} = this.props;
 		const {size} = this.props;
-		this.getScheduleRecord(this.state.pageNo, this.state.size);;
+		this.getScheduleRecord(this.state.pageNo, this.state.size);
 	}
 }
 

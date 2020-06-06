@@ -46,7 +46,11 @@ class RecipeDeleteDialogue extends React.Component {
                         <Button key="back" onClick={this.handleCancel}>
                             cancel
                         </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={()=>this.props.parent.handleDataFromRecipeDeleteDialogue(this.state.data)}>
+                        <Button key="submit" type="primary" loading={loading} onClick={()=>{this.props.parent.handleDataFromRecipeDeleteDialogue(this.state.data);
+                            this.setState({
+                                visible: false,
+                            });
+                        }}>
                             Submit
                         </Button>,
                     ]}
