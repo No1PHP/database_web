@@ -30,7 +30,7 @@ class MaterialOrder extends Component {
 				this.setState(
 					{
 						list : result,
-						totalPage:res.data.totalCount
+						totalCount:res.data.totalCount
 					}
 				)
 			}).catch((e) => {
@@ -43,7 +43,8 @@ class MaterialOrder extends Component {
 		return (
 			axios.get('http://localhost:8080/delete/?id='+name+'&'+'name=MaterialOrder').then((res) => {
 					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+					alert((result===200)?'item successfully changed':'change failed');
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -61,8 +62,15 @@ class MaterialOrder extends Component {
 		return (
 			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
-					alert((result===200)?'item successfully changed':'change failed')
+					const message = res.data.message;
+					console.log(message);
+					console.log(res.data)
+				if(res.data.succeed !== false) {
+					alert((result === 200) ? 'item successfully confirmed' : 'already confirmed')
+				}else{
+					console.log(res.data.message)
 				}
+			}
 			).catch((e)=>{
 				console.log(e.message)
 			})

@@ -14,6 +14,7 @@ import Transaction from "./pages/TransactionRecord";
 import ScheduleRecord from "./pages/ScheduleRecord";
 import MaterialOrder from "./pages/MaterialOrder";
 import MaterialUsage from "./pages/MaterialUsage";
+import Home from './pages/Home'
 import axios from "axios";
 
 class App extends Component {
@@ -26,25 +27,6 @@ class App extends Component {
         }
     }
 
-    onRef = (ref) =>{
-        this.child = ref;
-    }
-
-    getAccountInfo = () =>{
-        return (
-            axios.get('http://localhost:8080/account/info').then((res) => {
-                    const user = res.data.username;
-                    const login = res.data.login;
-                    this.setState({
-                        account:user,
-                        loginStatus:login
-                    })
-                }
-            ).catch((e)=>{
-                console.log(e)
-            })
-        )
-    }
 
   render() {
     return (
@@ -52,6 +34,7 @@ class App extends Component {
       	<BrowserRouter>
       		<div>
             <Header key={Math.random()}/>
+                <Route path='/Home' exact component={Home}></Route>
 
                 <Route path='/Login' exact component={Login}></Route>
                 <Route path='/Material' exact component={Material}></Route>

@@ -42,6 +42,7 @@ class MaterialUsage extends Component {
 		return (
 			axios.get('http://localhost:8080/delete?id='+id+'&name=MaterialUsage').then((res) => {
 				this.getMaterialUsage(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)

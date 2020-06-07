@@ -15,6 +15,7 @@ const changeLogin = (account) => ({
 export const logout = () => ({
 	type: constants.LOGOUT,
 	value: false,
+	login:false,
 	account:''
 }
 )

@@ -117,6 +117,7 @@ class Staff extends Component {
 		return (
 			axios.post('http://localhost:8080/Staff/operate?staffRequestString='+JSON.stringify(dataList)).then((res) => {
 				this.getStaff(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -129,6 +130,7 @@ class Staff extends Component {
 			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
 				const result = res.status;
 				alert((result===200)?'succeed':'Day Shift modify failed');
+				if(res.data.succeed === false) alert(res.data.message)
 			}).catch((e) => {
 				console.log(e)
 			})

@@ -59,6 +59,7 @@ class Transaction extends Component {
 		return (
 			axios.get('http://localhost:8080/delete?id='+id+'&name=Transaction').then((res) => {
 				this.getTransaction(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -70,6 +71,7 @@ class Transaction extends Component {
 		return (
 			axios.post('http://localhost:8080/Transaction/add?transactionRequest='+JSON.stringify(dataList)).then((res) => {
 				this.getTransaction(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)

@@ -126,7 +126,7 @@ class Header extends Component {
 
 		return (
 			<HeaderWrapper>
-				<Link to='/Login'>
+				<Link to='/Home'>
 					<Logo/>
 				</Link>
 				<MenuWrapper>

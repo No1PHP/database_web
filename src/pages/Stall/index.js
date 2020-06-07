@@ -110,6 +110,7 @@ class Stall extends Component {
 		return (
 			axios.get('http://localhost:8080/delete?'+'id='+name+'&'+'name=Stall').then((res) => {
 				this.getStall(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e.message)
@@ -121,6 +122,7 @@ class Stall extends Component {
 		return(
 			axios.post('http://localhost:8080/Stall/oper?staffRequestString='+JSON.stringify(requestJson)).then((res)=>{
 				this.getStall(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 
 			).catch(e=>{

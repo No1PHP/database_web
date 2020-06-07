@@ -113,6 +113,7 @@ class Material extends Component {
 		return (
 			axios.get('http://localhost:8080/delete?id='+name+'&'+'name='+'Material').then((res) => {
 					this.getMaterials(this.state.pageNo, this.state.size);
+					if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e) => {
 				console.log(e)
@@ -124,6 +125,7 @@ class Material extends Component {
 		return (
 			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
 					this.getMaterials(this.state.pageNo, this.state.size);
+				    if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e)
@@ -135,6 +137,7 @@ class Material extends Component {
 		return (
 			axios.post('http://localhost:8080/Material/operate?materialRequest='+JSON.stringify(dataList)).then((res) => {
 					this.getMaterials(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 				console.log(e)
@@ -148,6 +151,7 @@ class Material extends Component {
 			axios.post('http://localhost:8080/operate/do?operationRequestString='+JSON.stringify(dataList)).then((res) => {
 					const result = res.status;
 					console.log((result===200)?'Item successfully added':'Added failed')
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 					console.log(e)
@@ -160,6 +164,7 @@ class Material extends Component {
 		return (
 			axios.post('http://localhost:8080/Material/allocate?allocateRequest='+JSON.stringify(dataList)).then((res) => {
 					this.getMaterials(this.state.pageNo, this.state.size);
+				if(res.data.succeed === false) alert(res.data.message)
 				}
 			).catch((e)=>{
 					console.log(e)

@@ -119,8 +119,8 @@ class passwordChanging extends PureComponent {
                             }}/>
                         </Form.Item>
                         <Form.Item
-                            label="newPasswordAgain"
-                            name="newPasswordAgain"
+                            label="newPassAgain"
+                            name="newPassAgain"
                             rules={[
                                 {
                                     required: true,
