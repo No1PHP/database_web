@@ -126,9 +126,7 @@ class Header extends Component {
 
 		return (
 			<HeaderWrapper>
-				<Link to='/Login'>
-					<Logo/>
-				</Link>
+				<Logo/>
 				<MenuWrapper>
 				<Dropdown size={'middle'} align={'Align'} overlay={this.menu}>
 					<a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
