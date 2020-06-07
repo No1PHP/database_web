@@ -83,7 +83,7 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="timeStartWorking"
                         >
-                        <Input placeholder={'timeStartWorking'} defaultValue={this.props.record.timeStartWorking} onChange={(e) => {
+                        <Input placeholder={'HH:MM:SS'} defaultValue={this.props.record.timeStartWorking} onChange={(e) => {
                             this.state.data.availableAmount = e.target.value;
                         }}
                         />
@@ -91,7 +91,7 @@ class Dialogue extends React.Component {
                     <Form.Item
                         name="timeEndWorking"
                         >
-                        <Input placeholder={'timeEndWorking'} defaultValue={this.props.record.timeEndWorking} onChange={(e) => {
+                        <Input placeholder={'HH:MM:SS'} defaultValue={this.props.record.timeEndWorking} onChange={(e) => {
                             this.state.data.timeEndWorking = e.target.value;
                         }}/>
                     </Form.Item>

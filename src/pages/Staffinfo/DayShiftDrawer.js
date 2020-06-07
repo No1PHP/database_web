@@ -68,7 +68,7 @@ class DayShiftDrawer extends React.Component {
                         <Form.Item
                             name="timeStartWorking"
                         >
-                            <Input placeholder={'timeStartWorking'} onChange={(e) => {
+                            <Input placeholder={'YYYY-MM-DD HH:MM:SS'} onChange={(e) => {
                                 this.state.data.startTime = e.target.value;
                             }}
                             />
@@ -76,7 +76,7 @@ class DayShiftDrawer extends React.Component {
                         <Form.Item
                             name="timeEndWorking"
                         >
-                            <Input placeholder={'timeEndWorking'} onChange={(e) => {
+                            <Input placeholder={'YYYY-MM-DD HH:MM:SS'} onChange={(e) => {
                                 this.state.data.endTime = e.target.value;
                             }}/>
                         </Form.Item>
