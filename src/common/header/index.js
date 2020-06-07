@@ -148,7 +148,7 @@ class Header extends Component {
 									this.quit();
 								}} className='right'>logout</NavItem>
 							</div> :
-							<Link to='/Login'><NavItem className='right'>login</NavItem></Link>
+							<a href='/Login'><NavItem className='right'>login</NavItem></a>
 					}
 
 				</Nav>
@@ -160,9 +160,9 @@ class Header extends Component {
 	componentDidMount() {
 		this.timerID = setInterval(
 			() => this.tick(),
-			100
+			800
 		);
-		this.getAccountInfo();
+		//this.getAccountInfo();
 	}
 
 	componentWillUnmount() {

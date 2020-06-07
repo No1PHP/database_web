@@ -160,7 +160,6 @@ class MaterialOrder extends Component {
 				</Content>
 			</DetailWrapper>:
 				<Redirect to='/Login'>
-					{alert("please login first!")}
 					<NavItem className='right'>login</NavItem>
 				</Redirect>
 		)

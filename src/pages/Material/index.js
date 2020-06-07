@@ -99,12 +99,12 @@ class Material extends Component {
 			//axios.get('/api/detail.json?page='+pageNo+'&'+'size='+size).then((res) => {
 				const result = res.data.result;
 				this.setState(
-					{list : result,
-						   totalCount: res.data.totalCount
+					{
+						list : result,
+						totalCount: res.data.totalCount
 					}
 				)
 			}).catch((e) => {
-				alert(e.message)
 			})
 	};
 
@@ -290,7 +290,6 @@ class Material extends Component {
 
 			</DetailWrapper>:
 				<Redirect to='/Login'>
-					{alert("please login first!")}
 					<NavItem className='right'>login</NavItem>
 				</Redirect>
 		)

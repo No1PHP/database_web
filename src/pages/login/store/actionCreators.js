@@ -52,12 +52,12 @@ export const login = (account, password) => {
 			const result = res.data.data;
 			console.log("res:"+JSON.stringify(res));
 			console.log("res.data:"+JSON.stringify(res.data));
-			if (res.status===200) {
+			if (res.data.status==="login success") {
 				dispatch(changeLogin(account));
 				localStorage.setItem("loginNow","login");
 				localStorage.setItem("account",account);
 			}else {
-				console.log()
+				alert("login failed, please try again")
 			}
 		}).catch(e=>{
 			console.log(e.message)
