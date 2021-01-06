@@ -7,7 +7,7 @@
   ],
   "dependencies": {
     "@ant-design/icons": "latest",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "immutable": "^3.8.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
